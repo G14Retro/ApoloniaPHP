@@ -11,20 +11,16 @@ class PatientController extends Controller
 {
     public function dispoHorario(Request $request)
     {
-        $request->validate([
-            'fecha' => 'required|date',
-        ]);
-        
-        $availability = Availability::where('horaInicio','>=',$request->fecha)
-        ->where('disponibilidadhoraria.estado','=','1')
+
+        $availability = Availability::where('disponibilidadhoraria.estado','=','1')
         ->join('personas','personas.id','disponibilidadhoraria.id_persona')
         ->join('estadoDispo','estadoDispo.idEstado','disponibilidadhoraria.estado')
         ->join('tipo_consulta','tipo_consulta.id_consulta','disponibilidadhoraria.tipo_consulta')
         ->join('consultorios','consultorios.id_consultorio','disponibilidadhoraria.consultorio')
-        ->select('disponibilidadhoraria.horaInicio AS Hora inicio',
-                 'disponibilidadhoraria.horaFinal AS Hora final','personas.nombre AS Nombre Medico','personas.apellido AS Apellido Medico',
-                 'estadoDispo.nombreEstado AS Estado','tipo_consulta.nombre_consulta AS Especialidad',
-                 'consultorios.nombre_consultorio AS Consultorio')
+        ->select('disponibilidadhoraria.id_disponibilidad AS Id','disponibilidadhoraria.horaInicio AS fechaIni',
+                 'disponibilidadhoraria.horaFinal AS fechaFin','personas.nombre AS nMedico','personas.apellido AS aMedico',
+                 'estadoDispo.nombreEstado AS estado','tipo_consulta.nombre_consulta AS especialidad',
+                 'consultorios.nombre_consultorio AS consultorio')
         ->get();
         if (count($availability)==0) {
             return response()->json(

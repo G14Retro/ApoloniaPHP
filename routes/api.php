@@ -31,5 +31,6 @@ Route::group([
         Route::get('user', 'AuthController@user');
         Route::get('dispoHorario','PatientController@dispoHorario');
         Route::post('actualizarInformacion', 'PatientController@actualizarInformacion');
+        Route::post('agendaCita', 'PatientController@agendarCita');
     });
 });

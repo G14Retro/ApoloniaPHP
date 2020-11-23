@@ -6,6 +6,8 @@ use App\User;
 use App\Consultation;
 use App\Availability;
 use Illuminate\Http\Request;
+use App\Appointment;
+
 
 class PatientController extends Controller
 {
@@ -46,4 +48,23 @@ class PatientController extends Controller
             'Message' => 'Usuario actualizado correctamente!',
         ]);
     }
+    public function agendarCita (Request $request)
+    {
+        $request->validate([
+            "disponibilidad" => 'required | string |unique :citas', 
+            "id_paciente" => 'required | string'
+            
+        ]);
+        $cita = new Appointment ([
+            'estado_cita' => 'asignada',
+            'disponibilidad'=> $request-> disponibilidad,
+            'id_persona' => $request-> id_paciente            
+        ]);
+        $cita->save();
+        return response () -> json ([
+            'Message' => 'Su cita fue agendada correctamente'
+        ]);
+    }
+    
+
 }

@@ -54,6 +54,9 @@ class PatientController extends Controller
             "disponibilidad" => 'required | string |unique :citas', 
             "id_paciente" => 'required | string'
             
+        ], [
+            'disponibilidad.unique' => 'El error esta en la disponibilidad',
+            'id_paciente.required' => 'El error esta en el paciente'
         ]);
         $cita = new Appointment ([
             'estado_cita' => 'asignada',

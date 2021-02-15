@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFichaDentalTable extends Migration
+class CreatePiezaPacienteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateFichaDentalTable extends Migration
      */
     public function up()
     {
-        Schema::create('ficha_dental', function (Blueprint $table) {
+        Schema::create('pieza_paciente', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idusuario')->references('id')->on('personas');
+            $table->foreignId('id_pieza')->references('id')->on('pieza');
+            $table->foreignId('odontograma')->references('id')->on('odontograma');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateFichaDentalTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ficha_dental');
+        Schema::dropIfExists('pieza_paciente');
     }
 }

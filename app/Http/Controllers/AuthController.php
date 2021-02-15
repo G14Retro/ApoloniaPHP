@@ -10,7 +10,8 @@ class AuthController extends Controller
     public function signup(Request $request)
     {
         $request->validate([
-            'cc'               => 'required|string|unique:personas',
+            'tipo_documento'   => 'required|string',
+            'numero_documento' => 'required|string|unique:personas',
             'nombre'           => 'required|string',
             'apellido'         => 'required|string',
             'direccion'        => 'required|string',
@@ -20,12 +21,13 @@ class AuthController extends Controller
             'fecha_nacimiento' => 'required|date',
             'password'         => 'required|string|confirmed'
         ],[
-            'cc.unique'        => 'El número de documento ya se encuentra registrado',
-            'correo.unique'    => 'Este email ya se encuentra registrado'
+            'numero_documento.unique'   => 'El número de documento ya se encuentra registrado',
+            'correo.unique'             => 'Este correo ya se encuentra registrado'
         ]);
         $idTipo_usuario = UserType::where(['nombre_tipo_usuario' => 'paciente'])->value('id_tipo');
         $user = new User([
-            'cc'               => $request->cc,
+            'tipo_documento'   => $request->tipo_documento,
+            'numero_documento' => $request->numero_documento,
             'nombre'           => $request->nombre,
             'apellido'         => $request->apellido,
             'direccion'        => $request->direccion,
@@ -36,7 +38,7 @@ class AuthController extends Controller
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'tipo_usuario'     => $idTipo_usuario,
             'password'         => bcrypt($request->password),
-            'estado'           => 1
+            'estado'           => 'a'
         ]);
         $user->save();
         return response()->json([

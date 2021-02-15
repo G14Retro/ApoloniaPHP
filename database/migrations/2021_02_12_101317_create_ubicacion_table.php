@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFichaDentalTable extends Migration
+class CreateUbicacionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateFichaDentalTable extends Migration
      */
     public function up()
     {
-        Schema::create('ficha_dental', function (Blueprint $table) {
+        Schema::create('ubicacion', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idusuario')->references('id')->on('personas');
-            $table->timestamps();
+            $table->string('nombre',50);
+            $table->foreignId('ubicacionup')->references('id')->on('ubicacion');
         });
     }
 
@@ -27,6 +27,6 @@ class CreateFichaDentalTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ficha_dental');
+        Schema::dropIfExists('ubicacion');
     }
 }

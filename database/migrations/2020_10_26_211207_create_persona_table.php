@@ -15,7 +15,8 @@ class CreatePersonaTable extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
-            $table->string("cc",25)->unique();
+            $table->char("tipo_documento",10);
+            $table->string("numero_documento",25)->unique();
             $table->string('nombre',45);
             $table->string('apellido',45);
             $table->string('direccion',45);
@@ -27,7 +28,9 @@ class CreatePersonaTable extends Migration
             $table->foreignId('tipo_usuario')->references('id_tipo')->on('tipo_usuario');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->foreignId('estado')->references('idEstado')->on('estado');
+            $table->char('estado',10);
+            $table->foreign('estado')->references('idEstado')->on('estado');
+            $table->foreign('tipo_documento')->references('documento')->on('tipo_documento');
             $table->rememberToken();
             $table->timestamps();
         });

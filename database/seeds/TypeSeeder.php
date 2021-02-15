@@ -13,7 +13,7 @@ class TypeSeeder extends Seeder
     {
 
         DB::table('tipo_usuario')->insert([
-            'nombre_tipo_usuario' => 'admin',
+            'nombre_tipo_usuario' => 'administrador',
             'created_at' => now(),
         ]);
 
@@ -24,16 +24,6 @@ class TypeSeeder extends Seeder
 
         DB::table('tipo_usuario')->insert([
             'nombre_tipo_usuario' => 'doctor',
-            'created_at' => now(),
-        ]);
-
-        DB::table('tipo_usuario')->insert([
-            'nombre_tipo_usuario' => 'usuario',
-            'created_at' => now(),
-        ]);
-
-        DB::table('tipo_usuario')->insert([
-            'nombre_tipo_usuario' => 'aux_odontologia',
             'created_at' => now(),
         ]);
     }

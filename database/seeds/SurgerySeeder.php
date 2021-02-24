@@ -12,6 +12,6 @@ class SurgerySeeder extends Seeder
      */
     public function run()
     {
-        factory(Surgery::class,6)->create();
+        factory(Surgery::class,8)->create();
     }
 }

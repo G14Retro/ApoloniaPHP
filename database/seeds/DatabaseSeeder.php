@@ -16,10 +16,10 @@ class DatabaseSeeder extends Seeder
         ]);
         // $this->call(UserSeeder::class);
         $this->call(TypeSeeder::class);
+        $this->call(TypeDocumentSeeder::class);
         $this->call(ConsultationSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(SurgerySeeder::class);
-        $this->call(TypeDocumentSeeder::class);
     }
 
     protected function truncateTables(array $tables)

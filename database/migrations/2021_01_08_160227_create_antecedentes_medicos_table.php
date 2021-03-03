@@ -18,6 +18,7 @@ class CreateAntecedentesMedicosTable extends Migration
             $table->text('alergias');
             $table->text('enfermedades');
             $table->text('enfermedades_familiares');
+            $table->text('cirugias');
             $table->text('medicamentos');
             $table->text('otros');
             $table->foreignId('paciente')->references('id')->on('personas');

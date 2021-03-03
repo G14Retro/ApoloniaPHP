@@ -32,5 +32,7 @@ Route::group([
         Route::get('dispoHorario','PatientController@dispoHorario');
         Route::post('actualizarInformacion', 'PatientController@actualizarInformacion');
         Route::post('agendaCita', 'PatientController@agendarCita');
+        Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
+        Route::post('verAntecedentes', 'DoctorController@verAntecedentes');
     });
 });

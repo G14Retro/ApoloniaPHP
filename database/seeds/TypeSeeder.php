@@ -26,5 +26,9 @@ class TypeSeeder extends Seeder
             'nombre_tipo_usuario' => 'doctor',
             'created_at' => now(),
         ]);
+        DB::table('tipo_usuario')->insert([
+            'nombre_tipo_usuario' => 'recepcion',
+            'created_at' => now(),
+        ]);
     }
 }

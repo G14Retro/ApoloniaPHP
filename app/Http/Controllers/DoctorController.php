@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Appointment;
 use App\MedicalHistory;
+use App\User;
 use Carbon\Carbon;
 
 
@@ -16,7 +17,7 @@ class DoctorController extends Controller
             'id_medico'   => 'required|string'
         ]);
         $id_medico = $request->id_medico;
-        $appointment = Appointment::where('dispo.id_persona','=',$id_medico)
+        $appointment = Appointment::where('dispo.id_persona','=',$id_medico,'and','citas.estado','=','3')
         ->join('disponibilidadhoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
         ->join('personas','personas.id','citas.id_persona')
         ->select('personas.id AS id','personas.nombre AS nombre_paciente','personas.apellido AS apellido_paciente',
@@ -43,10 +44,16 @@ class DoctorController extends Controller
             'id_paciente'   => 'required|string'
         ]);
         $id_paciente = $request->id_paciente;
+        $paciente = User::where('personas.id','=',$id_paciente)
+        ->join('tipo_documento','tipo_documento.documento','personas.tipo_documento')
+        ->select('tipo_documento.nombre_documento AS tipo_documento','personas.numero_documento AS numero_documento',
+        'personas.nombre AS nombre','personas.apellido AS apellido')
+        ->get();
         $antecedente = MedicalHistory::where('paciente','=',$id_paciente);
 
         return response()->json(
-            $antecedente
+            ['paciente' => $paciente,
+            'antecedente' => $antecedente]
            );
     }
 
@@ -76,4 +83,5 @@ class DoctorController extends Controller
         return response()->json([
             'message' => 'El registro se ha guardado satisfactoriamente'], 201);
     }
+
 }

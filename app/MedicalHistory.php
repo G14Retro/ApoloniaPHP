@@ -8,6 +8,6 @@ class MedicalHistory extends Model
 {
     protected $table = 'antecedentes_medicos';
     protected $fillable = [
-        'alergias','enfermedades','enfermedades_familiares','medicamentos','otros','paciente'
+        'alergias','enfermedades','enfermedades_familiares','cirugias','medicamentos','otros','paciente'
     ];
 }

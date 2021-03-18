@@ -28,13 +28,13 @@ class AuthController extends Controller
         $user = new User([
             'tipo_documento'   => $request->tipo_documento,
             'numero_documento' => $request->numero_documento,
-            'nombre'           => $request->nombre,
-            'apellido'         => $request->apellido,
-            'direccion'        => $request->direccion,
-            'ciudad'           => 'bogota',
+            'nombre'           => strtolower($request->nombre),
+            'apellido'         => strtolower($request->apellido),
+            'direccion'        => strtolower($request->direccion),
+            'ciudad'           => strtolower($request->ciudad),
             'telefono'         => $request->telefono,
-            'correo'           => $request->correo,
-            'genero'           => $request->genero,
+            'correo'           => strtolower($request->correo),
+            'genero'           => strtolower($request->genero),
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'tipo_usuario'     => $idTipo_usuario,
             'password'         => bcrypt($request->password),
@@ -42,7 +42,7 @@ class AuthController extends Controller
         ]);
         $user->save();
         return response()->json([
-            'message' => 'Usuario creado!'], 201);
+            'message' => 'Se ha registrado correctamente!'], 201);
     }
     public function login(Request $request)
     {

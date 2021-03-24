@@ -31,11 +31,11 @@ class DoctorController extends Controller
                     $id_medico,
                     'Message' => 'No tiene citas asignadas para tramitar',
                 ]
-               );
+            );
         }else{
             return response()->json(
                 $appointment
-               );
+            );
         }
     }
 
@@ -57,7 +57,7 @@ class DoctorController extends Controller
         return response()->json(
             ['paciente' => $paciente,
             'antecedente' => $antecedente]
-           );
+        );
     }
 
     public function guardarAntecedente(Request $request)

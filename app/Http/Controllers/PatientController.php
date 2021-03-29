@@ -7,14 +7,16 @@ use App\Consultation;
 use App\Availability;
 use Illuminate\Http\Request;
 use App\Appointment;
+use Carbon\Carbon;
 
 
 class PatientController extends Controller
 {
     public function dispoHorario(Request $request)
     {
-
+        $date = Carbon::now();
         $availability = Availability::where('disponibilidadhoraria.estado','=','1')
+        ->where('horaInicio','>',$date)
         ->join('personas','personas.id','disponibilidadhoraria.id_persona')
         ->join('estadoDispo','estadoDispo.idEstado','disponibilidadhoraria.estado')
         ->join('tipo_consulta','tipo_consulta.id_consulta','disponibilidadhoraria.tipo_consulta')
@@ -35,6 +37,30 @@ class PatientController extends Controller
             $availability
            );
 
+    }
+
+    public function historial(Request $request)
+    {
+        $id_paciente = $request->id_paciente;
+
+       $history = Appointment::where('citas.id_persona','=',$id_paciente)
+       ->join('estado_cita','estado_cita.id','citas.estado')
+       ->join('disponibilidadHoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
+       ->select('dispo.horaInicio AS fecha_inicio','dispo.horaFinal AS fecha_fin','estado_cita.estado_cita AS estado',
+       'citas.created_at AS fecha_asignacion')
+       ->get();
+
+       if (count($history)==0) {
+        return response()->json(
+            [
+                'Message' => 'Usted no ha tomado ninguna cita',
+            ]
+           );
+       }
+
+       return response()->json(
+        $history
+       );
     }
 
     public function actualizarInformacion(Request $request )

@@ -19,6 +19,7 @@ class DoctorController extends Controller
         $id_medico = $request->id_medico;
         $appointment = Appointment::where('dispo.id_persona','=',$id_medico)
         ->where('citas.estado','=',3)
+        ->where('dispo.horaInicio','>',Carbon::now())
         ->join('disponibilidadhoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
         ->join('personas','personas.id','citas.id_persona')
         ->select('personas.id AS id','personas.nombre AS nombre_paciente','personas.apellido AS apellido_paciente',

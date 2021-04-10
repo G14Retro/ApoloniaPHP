@@ -29,7 +29,6 @@ class DoctorController extends Controller
         if (count($appointment)==0) {
             return response()->json(
                 [
-                    $id_medico,
                     'Message' => 'No tiene citas asignadas para tramitar',
                 ]
             );

@@ -25,9 +25,9 @@ Route::group([
     Route::post('signup', 'AuthController@signUp');
     Route::get('listarPacientes','AdministratorController@listarPacientes');
     
-
+    
     Route::group([
-    'middleware' => 'auth:api'
+        'middleware' => 'auth:api'
     ], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');

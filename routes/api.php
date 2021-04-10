@@ -23,6 +23,7 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
+    Route::get('listarPacientes','AdministratorController@listarPacientes');
     
 
     Route::group([
@@ -37,6 +38,7 @@ Route::group([
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
         Route::post('verAntecedentes', 'DoctorController@verAntecedentes');
         Route::post('guardarAntecedente', 'DoctorController@guardarAntecedente');
+        
 
         Route::post('paciente', 'ReceptionistController@paciente');
     });

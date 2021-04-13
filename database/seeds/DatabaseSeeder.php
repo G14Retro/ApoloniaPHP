@@ -12,15 +12,18 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->truncateTables([
-            'tipo_usuario','tipo_consulta','personas','consultorios','tipo_documento','estado_cita',
+            'tipo_usuario','tipo_consulta','personas','consultorios','tipo_documento','estado_cita','estado',
+            'estadodispo',
         ]);
         // $this->call(UserSeeder::class);
         $this->call(TypeSeeder::class);
         $this->call(TypeDocumentSeeder::class);
+        $this->call(StatusSeeder::class);
         $this->call(ConsultationSeeder::class);
+        $this->call(AvailabilityStatusSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(SurgerySeeder::class);
-        
+        $this->call(AppointmentStatusSeeder::class);
     }
 
     protected function truncateTables(array $tables)

@@ -86,7 +86,7 @@ class PatientController extends Controller
         ]);
 
         $cita = new Appointment ([
-            'estado' => 1,
+            'estado' => '#007bff',
             'disponibilidad'=> $request-> disponibilidad,
             'id_persona' => $request-> id_paciente            
         ]);

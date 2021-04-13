@@ -24,6 +24,10 @@ Route::group([
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
     Route::get('listarPacientes','AdministratorController@listarPacientes');
+    Route::post('crearUsuario','AdministratorController@crearUsuario');
+    Route::post('buscarUsuario','AdministratorController@buscarUsuario');
+    Route::post('editarUsuario','AdministratorController@editarUsuario');   
+    Route::post('actualizarUsuario','AdministratorController@actualizarUsuario');
     
     
     Route::group([

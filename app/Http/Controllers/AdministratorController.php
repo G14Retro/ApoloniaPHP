@@ -21,13 +21,7 @@ class AdministratorController extends Controller
          return response()->json($usuarios);
      }
 
-    public function index()
-    {
-        //
-        $usuarios = User::all();
-        return response()->json($usuarios);
-    }
-
+  
     /**
      * Show the form for creating a new resource.
      *
@@ -44,10 +38,11 @@ class AdministratorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function crearUsuario(Request $request)
     {
         //
-     User::create($request->all());
+     $usuarios =User::create($request->all());
+     
      return "El usuario fue creado correctamente";
         
 
@@ -59,11 +54,11 @@ class AdministratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function buscarUsuario(Request $request)
     {
         //
-        $usuario = User::find($id);
-        return $usuario;
+        $usuario = User::find($request->id_paciente);
+        return response ()->json($usuario);
     }
 
     /**
@@ -72,12 +67,10 @@ class AdministratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editarUsuario(Request $request)
     {
         //
-        $user = User::findOrFail($id);
-        return compact('user') + "Usuario encontrado";
-        
+               
     }
 
     /**
@@ -87,10 +80,10 @@ class AdministratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function actualizarUsuario(Request $request)
     {
         //
-        $usuario = User::findOrFail($id);
+        $usuario = User::findOrFail($request->id);
         $usuario->update($request->all());
         return $usuario;
     }

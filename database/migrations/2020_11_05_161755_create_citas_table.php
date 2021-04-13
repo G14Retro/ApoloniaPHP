@@ -15,9 +15,10 @@ class CreateCitasTable extends Migration
     {
         Schema::create('citas', function (Blueprint $table) {
             $table->id('id_cita');
-            $table->foreignId('estado')->references('id')->on('estado_cita');
+            $table->string('estado',20);
             $table->foreignId('disponibilidad')->references('id_disponibilidad')->on('disponibilidadHoraria');
             $table->foreignId('id_persona')->references('id')->on('personas');
+            $table->foreign('estado')->references('id')->on('estado_cita');
             $table->timestamps();
         });
     }

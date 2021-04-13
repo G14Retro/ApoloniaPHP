@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ConsultationSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(SurgerySeeder::class);
-        $this->call(AppointmentStatusSeeder::class);
+        
     }
 
     protected function truncateTables(array $tables)

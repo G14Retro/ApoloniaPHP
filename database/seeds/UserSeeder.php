@@ -69,5 +69,21 @@ class UserSeeder extends Seeder
             'password'              => bcrypt('123456'),
             'estado'                => 'a',
         ]);
+
+        DB::table('personas')->insert([
+            'tipo_documento'        => $cc,
+            'numero_documento'      => '1234567885',
+            'nombre'                => 'administrador',
+            'apellido'              => 'apolonia',
+            'direccion'             => 'calle false 123',
+            'ciudad'                => 'bogotá',
+            'telefono'              => '3204259625',
+            'correo'                => 'admin@ejemplo.com',
+            'genero'                => 'masculino',
+            'fecha_nacimiento'      => '1994-03-09',
+            'tipo_usuario'          => '1',
+            'password'              => bcrypt('123456'),
+            'estado'                => 'a',
+        ]);
     }
 }

@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->truncateTables([
             'tipo_usuario','tipo_consulta','personas','consultorios','tipo_documento','estado_cita','estado',
-            'estadodispo',
+            'estadoDispo',
         ]);
         // $this->call(UserSeeder::class);
         $this->call(TypeSeeder::class);

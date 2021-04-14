@@ -42,8 +42,6 @@ Route::group([
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
         Route::post('verAntecedentes', 'DoctorController@verAntecedentes');
         Route::post('guardarAntecedente', 'DoctorController@guardarAntecedente');
-        
-
         Route::post('paciente', 'ReceptionistController@paciente');
     });
 });

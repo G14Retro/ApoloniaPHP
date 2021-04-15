@@ -29,7 +29,6 @@ Route::group([
     Route::post('editarUsuario','AdministratorController@editarUsuario');   
     Route::post('actualizarUsuario','AdministratorController@actualizarUsuario');
     
-    
     Route::group([
         'middleware' => 'auth:api'
     ], function() {
@@ -42,6 +41,7 @@ Route::group([
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
         Route::post('verAntecedentes', 'DoctorController@verAntecedentes');
         Route::post('guardarAntecedente', 'DoctorController@guardarAntecedente');
-        Route::post('paciente', 'ReceptionistController@paciente');
+        Route::get('verDispo', 'ReceptionistController@verDispo');
+        Route::get('verMedicos', 'ReceptionistController@verMedicos');
     });
 });

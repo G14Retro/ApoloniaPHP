@@ -14,14 +14,14 @@ class AdministratorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-     public function listarPacientes()
-     {
+    public function listarPacientes()
+    {
          //
-         $usuarios = User::all();
-         return response()->json($usuarios);
-     }
+        $usuarios = User::all();
+        return response()->json($usuarios);
+    }
 
-  
+
     /**
      * Show the form for creating a new resource.
      *
@@ -41,9 +41,9 @@ class AdministratorController extends Controller
     public function crearUsuario(Request $request)
     {
         //
-     $usuarios =User::create($request->all());
-     
-     return "El usuario fue creado correctamente";
+    $usuarios =User::create($request->all());
+    
+    return "El usuario fue creado correctamente";
         
 
     }
@@ -70,7 +70,7 @@ class AdministratorController extends Controller
     public function editarUsuario(Request $request)
     {
         //
-               
+
     }
 
     /**
@@ -97,6 +97,6 @@ class AdministratorController extends Controller
     public function destroy($id)
     {
         //
-       
+    
     }
 }

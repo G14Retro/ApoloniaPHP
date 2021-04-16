@@ -43,5 +43,6 @@ Route::group([
         Route::post('guardarAntecedente', 'DoctorController@guardarAntecedente');
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');
+        Route::get('verConsultorios', 'ReceptionistController@verConsultorios');
     });
 });

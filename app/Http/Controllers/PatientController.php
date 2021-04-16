@@ -22,20 +22,20 @@ class PatientController extends Controller
         ->join('tipo_consulta','tipo_consulta.id_consulta','disponibilidadhoraria.tipo_consulta')
         ->join('consultorios','consultorios.id_consultorio','disponibilidadhoraria.consultorio')
         ->select('disponibilidadhoraria.id_disponibilidad AS Id','disponibilidadhoraria.horaInicio AS fechaIni',
-                 'disponibilidadhoraria.horaFinal AS fechaFin','personas.nombre AS nMedico','personas.apellido AS aMedico',
-                 'estadoDispo.nombreEstado AS estado','tipo_consulta.nombre_consulta AS especialidad',
-                 'consultorios.nombre_consultorio AS consultorio')
+                'disponibilidadhoraria.horaFinal AS fechaFin','personas.nombre AS nMedico','personas.apellido AS aMedico',
+                'estadoDispo.nombreEstado AS estado','tipo_consulta.nombre_consulta AS especialidad',
+                'consultorios.nombre_consultorio AS consultorio')
         ->get();
         if (count($availability)==0) {
             return response()->json(
                 [
                     'Message' => 'No hay citas disponibles para el día seleccionado',
                 ]
-               );
+            );
         }
-         return response()->json(
+        return response()->json(
             $availability
-           );
+        );
 
     }
 
@@ -43,32 +43,32 @@ class PatientController extends Controller
     {
         $id_paciente = $request->id_paciente;
 
-       $history = Appointment::where('citas.id_persona','=',$id_paciente)
-       ->join('estado_cita','estado_cita.id','citas.estado')
-       ->join('disponibilidadHoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
-       ->select('dispo.horaInicio AS fecha_inicio','dispo.horaFinal AS fecha_fin','estado_cita.estado_cita AS estado',
-       'citas.created_at AS fecha_asignacion')
-       ->get();
+    $history = Appointment::where('citas.id_persona','=',$id_paciente)
+    ->join('estado_cita','estado_cita.id','citas.estado')
+    ->join('disponibilidadHoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
+    ->select('dispo.horaInicio AS fecha_inicio','dispo.horaFinal AS fecha_fin','estado_cita.estado_cita AS estado',
+    'citas.created_at AS fecha_asignacion')
+    ->get();
 
-       if (count($history)==0) {
+    if (count($history)==0) {
         return response()->json(
             [
                 'Message' => 'Usted no ha tomado ninguna cita',
             ]
-           );
-       }
+        );
+    }
 
-       return response()->json(
+    return response()->json(
         $history
-       );
+    );
     }
 
     public function actualizarInformacion(Request $request )
     {
         $user = User::where(['id' => $request->id])
         ->update(['correo' => $request->correo,'telefono'=>$request->telefono,
-                  'direccion' => $request->direccion,'ciudad'=>$request->ciudad,'password' => bcrypt($request->password),
-                  'updated_at' => now()]);
+                'direccion' => $request->direccion,'ciudad'=>$request->ciudad,'password' => bcrypt($request->password),
+                'updated_at' => now()]);
 
         return response()->json([
             'Message' => 'Usuario actualizado correctamente!',

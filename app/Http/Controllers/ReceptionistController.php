@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Availability;
 use App\MedicalHistory;
 use App\User;
+use App\Surgery;
 use Carbon\Carbon;
 
 
@@ -37,5 +38,12 @@ class ReceptionistController extends Controller
         ->select('id','nombre','apellido')
         ->get();
         return response()->json($doctors);
+    }
+
+    public function verConsultorios()
+    {
+        $consultorios = Surgery::select('id_consultorio','nombre_consultorio')
+        ->get();
+        return response()->json($consultorios);
     }
 }

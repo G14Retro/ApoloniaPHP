@@ -44,5 +44,9 @@ Route::group([
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');
         Route::get('verConsultorios', 'ReceptionistController@verConsultorios');
+        Route::get('verDocumento', 'AdministratorController@verDocumento');
+        Route::get('verEstado' , 'AdministratorController@verEstado');
+        Route::get('verTusuario' , 'AdministratorController@verTusuario');
+
     });
 });

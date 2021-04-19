@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\UserType;
+use App\TypeDocument;
+use App\Status;
+
+
 
 
 class AdministratorController extends Controller
@@ -43,7 +47,11 @@ class AdministratorController extends Controller
         //
     $usuarios =User::create($request->all());
     
-    return "El usuario fue creado correctamente";
+    return response()->json(
+        [
+            'Message' => 'Usuario creado correctamente',
+        ]
+    );
         
 
     }
@@ -98,5 +106,28 @@ class AdministratorController extends Controller
     {
         //
     
+    }
+    public function verDocumento()
+    {
+        $documento = TypeDocument::all();
+        return response()->json($documento);
+    }
+    public function verGenero()
+    {
+        $genero = User::select('genero')
+        ->get();
+        return response()->json($genero);
+    }
+    public function verEstado()
+    {
+        $estado = Status::select('idEstado','nombreEstado')
+        ->get();
+        return response()->json($estado);
+    }
+    public function verTusuario()
+    {
+        $tusuario = UserType::select('nombre_tipo_usuario','id_tipo')
+        ->get();
+        return response()->json($tusuario);
     }
 }

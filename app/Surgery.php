@@ -12,3 +12,4 @@ class Surgery extends Model
         'nombre_consultorio',
     ];
 }
+

@@ -44,6 +44,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'Se ha registrado correctamente!'], 201);
     }
+    
     public function login(Request $request)
     {
         $request->validate([

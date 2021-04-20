@@ -23,11 +23,12 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
-    Route::get('listarPacientes','AdministratorController@listarPacientes');
+    Route::get('listarPacientes','AdministratorController@listarPacientes'); 
     Route::post('crearUsuario','AdministratorController@crearUsuario');
     Route::post('buscarUsuario','AdministratorController@buscarUsuario');
     Route::post('editarUsuario','AdministratorController@editarUsuario');   
     Route::post('actualizarUsuario','AdministratorController@actualizarUsuario');
+    
     
     Route::group([
         'middleware' => 'auth:api'
@@ -44,5 +45,10 @@ Route::group([
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');
         Route::get('verConsultorios', 'ReceptionistController@verConsultorios');
+        Route::get('verConsultas', 'ReceptionistController@verConsultas');
+        Route::get('verDisponibilidades', 'ReceptionistController@verDisponibilidades');
+        Route::post('createDispo','ReceptionistController@createDispo');
+        Route::post('dispo','ReceptionistController@dispo');
+        Route::put('editDispo/{id}','ReceptionistController@editDispo');
     });
 });

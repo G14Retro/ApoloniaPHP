@@ -7,6 +7,8 @@ use App\Availability;
 use App\MedicalHistory;
 use App\User;
 use App\Surgery;
+use App\Consultation;
+use App\Status;
 use Carbon\Carbon;
 
 
@@ -46,4 +48,44 @@ class ReceptionistController extends Controller
         ->get();
         return response()->json($consultorios);
     }
+
+    public function verConsultas()
+    {
+        $consultas = Consultation::select('id_consulta',
+        'nombre_consulta')
+        ->get();
+        return response()->json($consultas);
+    }
+
+    
+    public function verDisponibilidades()
+    {
+        $disponibilidades = Status::select('idEstado',
+        'nombreEstado')
+        ->get();
+        return response()->json($disponibilidades);
+    }
+
+
+    public function createDispo(Request $request)
+    {
+        $crearDispo = Availability::create($request->all());
+        return response()->json([
+            'message' => 'El registro se ha guardado satisfactoriamente'], 201);    
+    }
+
+    public function dispo(Request $request)
+    {
+        $dispo = Availability::find($request->all());
+        return response()->json(
+            $dispo);    
+    }  
+
+    public function editDispo(Request $request,$id)
+    {
+        $dispo = Availability::find($id);
+        $dispo->update($request->all());
+        return response()->json(
+            'Registro Actualizado');    
+    }  
 }

@@ -65,7 +65,7 @@ class AdministratorController extends Controller
     public function buscarUsuario(Request $request)
     {
         //
-        $usuario = User::find($request->id_paciente);
+        $usuario = User::find($request);
         return response ()->json($usuario);
     }
 
@@ -88,12 +88,12 @@ class AdministratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function actualizarUsuario(Request $request)
+    public function actualizarUsuario(Request $request,$id)
     {
         //
-        $usuario = User::findOrFail($request->id);
+        $usuario = User::findOrFail($id);
         $usuario->update($request->all());
-        return $usuario;
+        return response()->json('Registro actualizado correctamente');
     }
 
     /**

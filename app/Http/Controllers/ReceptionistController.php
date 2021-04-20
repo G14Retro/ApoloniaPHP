@@ -8,7 +8,7 @@ use App\MedicalHistory;
 use App\User;
 use App\Surgery;
 use App\Consultation;
-use App\Status;
+use App\StatusAvailability;
 use Carbon\Carbon;
 
 
@@ -60,7 +60,7 @@ class ReceptionistController extends Controller
     
     public function verDisponibilidades()
     {
-        $disponibilidades = Status::select('idEstado',
+        $disponibilidades = StatusAvailability::select('idEstado',
         'nombreEstado')
         ->get();
         return response()->json($disponibilidades);

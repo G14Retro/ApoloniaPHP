@@ -53,6 +53,7 @@ Route::group([
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
         Route::post('buscarUsuario','AdministratorController@buscarUsuario');
         Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
-
+        Route::post('dispoID','PatientController@dispoID');
+        Route::put('cancelarCita/{id}','PatientController@cancelarCita');
     });
 });

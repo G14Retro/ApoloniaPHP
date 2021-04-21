@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Consultation;
 use App\Availability;
-use Illuminate\Http\Request;
 use App\Appointment;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 
@@ -29,7 +29,7 @@ class PatientController extends Controller
         if (count($availability)==0) {
             return response()->json(
                 [
-                    'Message' => 'No hay citas disponibles para el día seleccionado',
+                    'Message' => 'No hay citas disponibles',
                 ]
             );
         }
@@ -46,7 +46,7 @@ class PatientController extends Controller
     $history = Appointment::where('citas.id_persona','=',$id_paciente)
     ->join('estado_cita','estado_cita.id','citas.estado')
     ->join('disponibilidadHoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
-    ->select('dispo.horaInicio AS fecha_inicio','dispo.horaFinal AS fecha_fin','estado_cita.estado_cita AS estado',
+    ->select('citas.id_cita AS id_cita','dispo.horaInicio AS fecha_inicio','dispo.horaFinal AS fecha_fin','estado_cita.estado_cita AS estado',
     'citas.created_at AS fecha_asignacion')
     ->get();
 
@@ -77,7 +77,7 @@ class PatientController extends Controller
     public function agendarCita (Request $request)
     {
         $request->validate([
-            "disponibilidad" => 'required | string |unique :citas', 
+            "disponibilidad" => 'required | string', 
             "id_paciente" => 'required | string'
             
         ], [
@@ -96,5 +96,30 @@ class PatientController extends Controller
         ]);
     }
     
+    public function dispoID(Request $request)
+    {
+       $idDispo = Appointment::find($request->id)->value('disponibilidad');
+       $dispo = Availability::where('disponibilidadhoraria.id_disponibilidad','=',$idDispo)
+       ->join('personas','personas.id','disponibilidadhoraria.id_persona')
+       ->join('tipo_consulta','tipo_consulta.id_consulta','disponibilidadhoraria.tipo_consulta')
+       ->join('consultorios','consultorios.id_consultorio','disponibilidadhoraria.consultorio')
+       ->select('disponibilidadhoraria.id_disponibilidad AS id_dispo',
+                'personas.nombre AS nombre_medico','personas.apellido AS apellido_medico',
+                'disponibilidadhoraria.horaInicio AS inicio_cita','disponibilidadhoraria.horaFinal AS fin_cita',
+                'tipo_consulta.nombre_consulta AS tipo_consulta','consultorios.nombre_consultorio AS consultorio')
+        ->get();
+       return response()->json($dispo);
+    }
 
+    public function cancelarCita($id)
+    {
+        $cita = Appointment::findOrfail($id);
+        $cita->update([
+            'estado' => '#dc3545',
+        ]      
+        );
+        return response()->json([
+            'message' => 'Se ha cancelado su cita satisfactoriamente'
+        ]);
+    }
 }

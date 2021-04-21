@@ -88,4 +88,12 @@ class ReceptionistController extends Controller
         return response()->json(
             'Registro Actualizado');    
     }  
+
+    public function destroy($id)
+    {
+        $dispo = Availability::find($id);
+        $dispo->delete();
+        return response()->json(
+            'Registro Eliminado');    
+    }  
 }

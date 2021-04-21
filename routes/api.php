@@ -58,6 +58,11 @@ Route::group([
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
         Route::post('buscarUsuario','AdministratorController@buscarUsuario');
         Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
+<<<<<<< HEAD
         
+=======
+        Route::post('dispoID','PatientController@dispoID');
+        Route::put('cancelarCita/{id}','PatientController@cancelarCita');
+>>>>>>> 170f64935b3bccae89af3d9fcd1df3358aef4972
     });
 });

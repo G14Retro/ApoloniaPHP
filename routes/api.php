@@ -33,13 +33,16 @@ Route::group([
     ], function() {
         Route::get('logout', 'AuthController@logout');
         Route::get('user', 'AuthController@user');
+
         Route::get('dispoHorario','PatientController@dispoHorario');
         Route::post('actualizarInformacion', 'PatientController@actualizarInformacion');
         Route::post('agendaCita', 'PatientController@agendarCita');
         Route::post('historial', 'PatientController@historial');
+
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
         Route::post('verAntecedentes', 'DoctorController@verAntecedentes');
         Route::post('guardarAntecedente', 'DoctorController@guardarAntecedente');
+
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');
         Route::get('verConsultorios', 'ReceptionistController@verConsultorios');
@@ -48,11 +51,13 @@ Route::group([
         Route::post('createDispo','ReceptionistController@createDispo');
         Route::post('dispo','ReceptionistController@dispo');
         Route::put('editDispo/{id}','ReceptionistController@editDispo');
+        Route::delete('destroy/{id}','ReceptionistController@destroy');
+
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
         Route::post('buscarUsuario','AdministratorController@buscarUsuario');
         Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
-
+        
     });
 });

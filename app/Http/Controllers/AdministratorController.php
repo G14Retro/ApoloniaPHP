@@ -45,13 +45,23 @@ class AdministratorController extends Controller
     public function crearUsuario(Request $request)
     {
         //
-    $usuarios =User::create($request->all());
-    
-    return response()->json(
-        [
-            'Message' => 'Usuario creado correctamente',
-        ]
-    );
+        $user = new User([
+            'tipo_documento'   => $request->tipo_documento,
+            'numero_documento' => $request->numero_documento,
+            'nombre'           => strtolower($request->nombre),
+            'apellido'         => strtolower($request->apellido),
+            'direccion'        => $request->direccion,
+            'ciudad'           => $request->ciudad,
+            'telefono'         => $request->telefono,
+            'correo'           => strtolower($request->correo),
+            'genero'           => $request->genero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'tipo_usuario'     => $request->tipo_usuario,
+            'password'         => bcrypt($request->password),
+            'estado'           => $request->estado,
+        ]);
+        $user->save();
+    return response()->json('Usuario creado correctamente');
         
 
     }
@@ -91,8 +101,23 @@ class AdministratorController extends Controller
     public function actualizarUsuario(Request $request,$id)
     {
         //
+        $request-> password= bcrypt($request->password);
         $usuario = User::findOrFail($id);
-        $usuario->update($request->all());
+        $usuario->update([
+            'tipo_documento'   => $request->tipo_documento,
+            'numero_documento' => $request->numero_documento,
+            'nombre'           => strtolower($request->nombre),
+            'apellido'         => strtolower($request->apellido),
+            'direccion'        => $request->direccion,
+            'ciudad'           => $request->ciudad,
+            'telefono'         => $request->telefono,
+            'correo'           => strtolower($request->correo),
+            'genero'           => $request->genero,
+            'fecha_nacimiento' => $request->fecha_nacimiento,
+            'tipo_usuario'     => $request->tipo_usuario,
+            'password'         => bcrypt($request->password),
+            'estado'           => $request->estado,
+        ]);
         return response()->json('Registro actualizado correctamente');
     }
 

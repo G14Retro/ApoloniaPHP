@@ -15,8 +15,9 @@ class CreateOdontogramaTable extends Migration
     {
         Schema::create('odontograma', function (Blueprint $table) {
             $table->id();
+            $table->text('odontograma');
             $table->string('comentario',100);
-            $table->foreignId('ficha')->references('id')->on('ficha_dental');
+            $table->foreignId('ficha')->references('id')->on('ficha_dental')->unique();
             $table->timestamps();
         });
     }

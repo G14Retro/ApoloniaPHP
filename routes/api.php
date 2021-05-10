@@ -42,6 +42,12 @@ Route::group([
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
         Route::post('verAntecedentes', 'DoctorController@verAntecedentes');
         Route::post('guardarAntecedente', 'DoctorController@guardarAntecedente');
+        Route::get('verPacientes', 'DoctorController@verPacientes');
+        Route::get('pacienID/{id}', 'DoctorController@pacienID');
+        Route::get('verOdonto/{id}', 'DoctorController@verOdonto');
+        Route::post('guardarOdonto', 'DoctorController@guardarOdonto');
+        Route::post('nuevaFicha', 'DoctorController@nuevaFicha');
+        Route::get('obtenerOdonto/{id}', 'DoctorController@obtenerOdonto');
 
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');

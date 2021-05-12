@@ -62,6 +62,42 @@ class DoctorController extends Controller
         );
     }
 
+    public function verAntecedenteID($id)
+    {
+        $antecedente = MedicalHistory::where('paciente',$id)
+        ->select('alergias','enfermedades','enfermedades_familiares','cirugias','medicamentos','otros','paciente')
+        ->get();
+        $paciente= User::where('id',$id)
+        ->join('tipo_documento','tipo_documento.documento','personas.tipo_documento')
+        ->select('tipo_documento.nombre_documento AS tipo_documento','personas.numero_documento AS numero_documento',
+        'personas.nombre AS nombre','personas.apellido AS apellido')
+        ->get();
+        return response()->json([
+            'paciente' => $paciente,
+            'antecedente' => $antecedente
+            ]);
+    }
+
+    public function guardarAntecedenteId(Request $request)
+    {
+        $paciente=$request->paciente;
+        $antecedente = MedicalHistory::where('paciente',$paciente)
+        ->get();
+
+        if (count($antecedente)==0) {
+            MedicalHistory::create($request->all());
+            return response()->json([
+                'message' => 'Se ha guardado el antecedente correctamente',
+            ]);
+        }else {
+            MedicalHistory::where('paciente',$paciente)
+            ->update($request->all());
+            return response()->json([
+                'message' => 'Se ha actualizado el antecedente correctamente',
+            ]);
+        }
+    }
+
     public function verPacientes()
     {
         $tipo_usuario = UserType::where(['nombre_tipo_usuario' => 'paciente'])->value('id_tipo');

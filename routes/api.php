@@ -48,6 +48,8 @@ Route::group([
         Route::post('guardarOdonto', 'DoctorController@guardarOdonto');
         Route::post('nuevaFicha', 'DoctorController@nuevaFicha');
         Route::get('obtenerOdonto/{id}', 'DoctorController@obtenerOdonto');
+        Route::get('verAntecedenteID/{id}', 'DoctorController@verAntecedenteID');
+        Route::post('guardarAntecedenteId', 'DoctorController@guardarAntecedenteId');
 
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');

@@ -15,7 +15,7 @@ class CreateFichaDentalTable extends Migration
     {
         Schema::create('ficha_dental', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('idusuario')->references('id')->on('personas');
+            $table->foreignId('paciente')->references('id')->on('personas');
             $table->timestamps();
         });
     }

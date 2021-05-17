@@ -28,7 +28,7 @@ class ReceptionistController extends Controller
 
         if (count($availability) == 0) {
             return response()->json([
-                'message' => 'No hay disponibilidad en estos momentos' 
+                'message' => 'No hay disponibilidad en estos momentos'
             ]);
         }
         return response()->json($availability);
@@ -57,7 +57,7 @@ class ReceptionistController extends Controller
         return response()->json($consultas);
     }
 
-    
+
     public function verDisponibilidades()
     {
         $disponibilidades = StatusAvailability::select('idEstado',
@@ -71,29 +71,29 @@ class ReceptionistController extends Controller
     {
         $crearDispo = Availability::create($request->all());
         return response()->json([
-            'message' => 'El registro se ha guardado satisfactoriamente'], 201);    
+            'message' => 'El registro se ha guardado satisfactoriamente'], 201);
     }
 
     public function dispo(Request $request)
     {
         $dispo = Availability::find($request->all());
         return response()->json(
-            $dispo);    
-    }  
+            $dispo);
+    }
 
     public function editDispo(Request $request,$id)
     {
         $dispo = Availability::find($id);
         $dispo->update($request->all());
         return response()->json(
-            'Registro Actualizado');    
-    }  
+            'Registro Actualizado');
+    }
 
     public function destroy($id)
     {
         $dispo = Availability::find($id);
         $dispo->delete();
         return response()->json(
-            'Registro Eliminado');    
-    }  
+            'Registro Eliminado');
+    }
 }

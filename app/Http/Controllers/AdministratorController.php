@@ -11,6 +11,7 @@ use App\Status;
 
 
 
+
 class AdministratorController extends Controller
 {
     /**
@@ -21,8 +22,16 @@ class AdministratorController extends Controller
     public function listarPacientes()
     {
          //
-        $usuarios = User::all();
+        $usuarios = User::join('tipo_documento','personas.tipo_documento','tipo_documento.documento')
+        ->join('tipo_usuario','personas.tipo_usuario','tipo_usuario.id_tipo')
+        ->join('estado','personas.estado','estado.idEstado')
+        ->select('tipo_documento.nombre_documento AS tipo_documento','personas.numero_documento AS numero_documento',
+        'personas.nombre AS nombre','personas.apellido AS apellido', 'personas.direccion AS direccion', 'personas.ciudad AS ciudad',
+        'personas.telefono AS telefono', 'personas.correo AS correo','personas.genero AS genero', 'personas.fecha_nacimiento AS fecha_nacimiento',
+        'tipo_usuario.nombre_tipo_usuario AS nombre_tipo_usario', 'estado.nombreEstado AS nombreEstado')
+        ->get();
         return response()->json($usuarios);
+        
     }
 
 

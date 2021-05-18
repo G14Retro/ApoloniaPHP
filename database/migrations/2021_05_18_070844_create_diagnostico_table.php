@@ -21,6 +21,7 @@ class CreateDiagnosticoTable extends Migration
             $table->foreignId('sintomas')->references('id')->on('sintomas');      
             $table->string('observacion')->nullable();
             $table->foreignId('tratamiento')->references('id')->on('tratamiento');      
+            $table->string('valor_tratamiento');
         });
     }
 

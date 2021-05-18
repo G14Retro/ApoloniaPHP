@@ -145,6 +145,9 @@ class DoctorController extends Controller
             $token = Token::create([
                 'paciente' => $id_paciente,
             ]);
+            $odonto = Odontogram::create([
+                'ficha' => $token->id
+            ]);
             $medicalhistory = new MedicalHistory([
                 'alergias'                  => strtolower($request->alergias),
                 'enfermedades'              => strtolower($request->enfermedades),
@@ -160,7 +163,7 @@ class DoctorController extends Controller
                 ->update(['estado'=>'#28a745']);
                 return response()->json([
                 'message' => 'El registro se ha guardado satisfactoriamente',
-                'ficha' => $token->id], 201);
+                'odonto' => $odonto->id], 201);
         }else {
             MedicalHistory::where('paciente','=',$id_paciente)->update([
                 'alergias'                  => strtolower($request->alergias),
@@ -177,9 +180,12 @@ class DoctorController extends Controller
             $token = Token::create([
                 'paciente' => $id_paciente,
             ]);
+            $odonto = Odontogram::create([
+                'ficha' => $token->id
+            ]);
             return response()->json([
                 'message' => 'El registro se ha actualizado satisfactoriamente',
-                'ficha' => $token->id], 202);
+                'odonto' => $odonto->id], 202);
         }
     }
 

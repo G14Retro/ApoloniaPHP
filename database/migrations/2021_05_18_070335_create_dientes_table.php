@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePiezaTable extends Migration
+class CreateDientesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePiezaTable extends Migration
      */
     public function up()
     {
-        Schema::create('pieza', function (Blueprint $table) {
-            $table->id();
-            $table->string('nombre',45);
-            $table->timestamps();
+        Schema::create('dientes', function (Blueprint $table) {
+            $table->string('numero',10);
+            $table->primary('numero');
+            $table->string('nombre');
         });
     }
 
@@ -27,6 +27,6 @@ class CreatePiezaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pieza');
+        Schema::dropIfExists('dientes');
     }
 }

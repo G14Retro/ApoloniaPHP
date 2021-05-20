@@ -16,6 +16,7 @@ class CreateSintomasTable extends Migration
         Schema::create('sintomas', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_sintoma');
+            $table->string('color');
             $table->timestamps();
         });
     }

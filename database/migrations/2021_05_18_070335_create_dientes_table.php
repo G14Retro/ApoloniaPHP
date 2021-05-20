@@ -14,9 +14,10 @@ class CreateDientesTable extends Migration
     public function up()
     {
         Schema::create('dientes', function (Blueprint $table) {
-            $table->string('numero',10);
+            $table->string('numero',10)->unique();
             $table->primary('numero');
             $table->string('nombre');
+            $table->string('arcada');
         });
     }
 

@@ -22,11 +22,7 @@ Route::group([
     'prefix' => 'apolonia'
 ], function () {
     Route::post('login', 'AuthController@login');
-    Route::post('signup', 'AuthController@signUp');
-    Route::get('listarPacientes','AdministratorController@listarPacientes'); 
-    Route::post('crearUsuario','AdministratorController@crearUsuario');
-    Route::post('editarUsuario','AdministratorController@editarUsuario');   
-    
+    Route::post('signup', 'AuthController@signUp');    
     
     Route::group([
         'middleware' => 'auth:api'
@@ -66,6 +62,9 @@ Route::group([
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
         Route::post('buscarUsuario','AdministratorController@buscarUsuario');
         Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
+        Route::get('listarPacientes','AdministratorController@listarPacientes'); 
+        Route::post('crearUsuario','AdministratorController@crearUsuario');
+        Route::post('editarUsuario','AdministratorController@editarUsuario');  
         Route::post('dispoID','PatientController@dispoID');
         Route::put('cancelarCita/{id}','PatientController@cancelarCita');
     });

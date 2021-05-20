@@ -68,6 +68,10 @@ class AdministratorController extends Controller
             'tipo_usuario'     => $request->tipo_usuario,
             'password'         => bcrypt($request->password),
             'estado'           => $request->estado,
+            [
+                'numero_documento.unique'   => 'El número de documento ya se encuentra registrado',
+                'correo.unique'             => 'Este correo ya se encuentra registrado'
+            ]
         ]);
         $user->save();
     return response()->json('Usuario creado correctamente');

@@ -46,6 +46,10 @@ Route::group([
         Route::get('obtenerOdonto/{id}', 'DoctorController@obtenerOdonto');
         Route::get('verAntecedenteID/{id}', 'DoctorController@verAntecedenteID');
         Route::post('guardarAntecedenteId', 'DoctorController@guardarAntecedenteId');
+        Route::get('getDientes', 'DoctorController@getDientes');
+        Route::get('getSintomas', 'DoctorController@getSintomas');
+        Route::get('getTratamientos', 'DoctorController@getTratamientos');
+        Route::post('guardarDiagnostico', 'DoctorController@guardarDiagnostico');
 
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');

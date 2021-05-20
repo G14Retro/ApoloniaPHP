@@ -15,13 +15,8 @@ class CreateTratamientoTable extends Migration
     {
         Schema::create('tratamiento', function (Blueprint $table) {
             $table->id();
-            $table->text('comentario');
-            $table->string('nombre',45);
-            $table->string('descripcion',200);
-            $table->dateTime('fecha_inicio');
-            $table->dateTime('fecha_fin');
-            $table->string('valor',45);
-            $table->string('estado',45);
+            $table->string('nombre_tratamiento');
+            $table->decimal('valor_tratamiento');
             $table->timestamps();
         });
     }

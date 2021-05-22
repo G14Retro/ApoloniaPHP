@@ -14,10 +14,11 @@ class CreateDiagnosticoTable extends Migration
     public function up()
     {
         Schema::create('diagnostico', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('odontograma')->references('id')->on('odontograma');
             $table->string('diente',10);
             $table->foreign('diente')->references('numero')->on('dientes');
-            $table->string('superficie',10);
+            $table->string('superficie',10)->nullable();
             $table->foreignId('sintomas')->references('id')->on('sintomas');      
             $table->string('observacion')->nullable();
             $table->foreignId('tratamiento')->references('id')->on('tratamiento');      

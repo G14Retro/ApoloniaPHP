@@ -7,7 +7,8 @@ use App\User;
 use App\UserType;
 use App\TypeDocument;
 use App\Status;
-
+use App\Treatment;
+use App\Symptom;
 
 
 
@@ -31,6 +32,18 @@ class AdministratorController extends Controller
         'tipo_usuario.nombre_tipo_usuario AS nombre_tipo_usario', 'estado.nombreEstado AS nombreEstado')
         ->get();
         return response()->json($usuarios);
+        
+    }
+    public function listarTratamientos()
+    {
+         
+        return Treatment::all();
+        
+    }
+    public function listarSintomas()
+    {
+         
+        return Symptom::all();
         
     }
 
@@ -68,9 +81,40 @@ class AdministratorController extends Controller
             'tipo_usuario'     => $request->tipo_usuario,
             'password'         => bcrypt($request->password),
             'estado'           => $request->estado,
+            [
+                'numero_documento.unique'   => 'El número de documento ya se encuentra registrado',
+                'correo.unique'             => 'Este correo ya se encuentra registrado'
+            ]
         ]);
         $user->save();
     return response()->json('Usuario creado correctamente');
+        
+
+    }
+    public function crearTratamiento(Request $request)
+    {
+        //
+        $tratamiento = new Treatment([
+            'nombre_tratamiento'   => $request->nombre_tratamiento,
+            'valor_tratamiento' => $request->valor_tratamiento,
+            
+      
+        ]);
+        $tratamiento->save();
+    return response()->json('Tratamiento creado correctamente');
+        
+
+    }
+    public function crearSintomas(Request $request)
+    {
+        //
+        $sintomas = new Symptom([
+            'nombre_sintoma'   => $request->nombre_sintoma,
+            'color' => $request->color,
+      
+        ]);
+        $sintomas->save();
+    return response()->json('Sintoma creado correctamente');
         
 
     }
@@ -86,6 +130,18 @@ class AdministratorController extends Controller
         //
         $usuario = User::find($request);
         return response ()->json($usuario);
+    }
+    public function buscarTratamiento(Request $request)
+    {
+        //
+        $tratamiento = Treatment::find($request);
+        return response ()->json($tratamiento);
+    }
+    public function buscarSintoma(Request $request)
+    {
+        //
+        $sintoma = Symptom::find($request);
+        return response ()->json($sintoma);
     }
 
     /**
@@ -129,6 +185,26 @@ class AdministratorController extends Controller
         ]);
         return response()->json('Registro actualizado correctamente');
     }
+    public function actualizarTratamiento(Request $request,$id)
+    {
+        //
+        $tratamiento = Treatment::findOrFail($id);
+        $tratamiento->update([
+            'nombre_tratamiento'   => $request->nombre_tratamiento,
+            'valor_tratamiento' => $request->valor_tratamiento,
+        ]);
+        return response()->json('Registro actualizado correctamente');
+    }
+    public function actualizarSintoma(Request $request,$id)
+    {
+        //
+        $sintoma = Symptom::findOrFail($id);
+        $sintoma->update([
+            'nombre_sintoma'   => $request->nombre_sintoma,
+            'color' => $request->color,
+        ]);
+        return response()->json('Registro actualizado correctamente');
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -136,9 +212,20 @@ class AdministratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function elimiarTratamiento($id)
     {
-        //
+        $tratamiento = Treatment::find($id);
+        $tratamiento->delete();
+        return response()->json(
+            'Registro Eliminado');
+    
+    }
+    public function elimiarSintoma($id)
+    {
+        $sintoma = Symptom::find($id);
+        $sintoma->delete();
+        return response()->json(
+            'Registro Eliminado');
     
     }
     public function verDocumento()

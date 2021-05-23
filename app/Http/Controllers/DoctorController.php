@@ -30,7 +30,8 @@ class DoctorController extends Controller
         ->where('dispo.horaInicio','>',Carbon::now())
         ->join('disponibilidadhoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
         ->join('personas','personas.id','citas.id_persona')
-        ->select('citas.id_cita AS id','personas.nombre AS nombre_paciente','personas.apellido AS apellido_paciente',
+        ->select('personas.id AS id_paciente','citas.id_cita AS id',
+        'personas.nombre AS nombre_paciente','personas.apellido AS apellido_paciente',
         'dispo.horaInicio AS hora_atencion')
         ->orderBy('hora_atencion','desc')
         ->get();
@@ -45,25 +46,6 @@ class DoctorController extends Controller
                 $appointment
             );
         }
-    }
-
-    public function verAntecedentes(Request $request)
-    {
-        $id_paciente = Appointment::where('id_cita','=',$request->id_paciente)
-        ->value('id_persona');
-        $paciente = User::where('personas.id','=',$id_paciente)
-        ->join('tipo_documento','tipo_documento.documento','personas.tipo_documento')
-        ->select('personas.id AS id','tipo_documento.nombre_documento AS tipo_documento','personas.numero_documento AS numero_documento',
-        'personas.nombre AS nombre','personas.apellido AS apellido')
-        ->get();
-        $antecedente = MedicalHistory::where('paciente','=',$id_paciente)
-        ->select('alergias','enfermedades','enfermedades_familiares','cirugias','medicamentos','otros','paciente')
-        ->get();
-
-        return response()->json(
-            ['paciente' => $paciente,
-            'antecedente' => $antecedente]
-        );
     }
 
     public function verAntecedenteID($id)
@@ -130,69 +112,6 @@ class DoctorController extends Controller
         );
     }
 
-    public function guardarAntecedente(Request $request)
-    {
-        $request->validate([
-            'alergias'                  => 'required|string',
-            'enfermedades'              => 'required|string',
-            'enfermedades_familiares'   => 'required|string',
-            'cirugias'                  => 'required|string',
-            'medicamentos'              => 'required|string',
-            'otros'                     => 'required|string',
-            'cita'                      => 'required|string',
-        ]);
-        $id_paciente = Appointment::where('id_cita','=',$request->cita)
-        ->value('id_persona');
-        $medicalhistory = MedicalHistory::where('paciente','=',$id_paciente)
-        ->get();
-        if (count($medicalhistory)==0) {
-            $token = Token::create([
-                'paciente' => $id_paciente,
-            ]);
-            $odonto = Odontogram::create([
-                'ficha' => $token->id
-            ]);
-            $medicalhistory = new MedicalHistory([
-                'alergias'                  => strtolower($request->alergias),
-                'enfermedades'              => strtolower($request->enfermedades),
-                'enfermedades_familiares'   => strtolower($request->enfermedades_familiares),
-                'cirugias'                  => strtolower($request->cirugias),
-                'medicamentos'              => strtolower($request->medicamentos),
-                'otros'                     => strtolower($request->otros),
-                'paciente'                  => $id_paciente,
-                ]);
-                $medicalhistory->save();
-                $availability = Appointment::where('id_persona','=',$id_paciente)
-                ->where('id_persona','=',$request->cita)
-                ->update(['estado'=>'#28a745']);
-                return response()->json([
-                'message' => 'El registro se ha guardado satisfactoriamente',
-                'odonto' => $odonto->id], 201);
-        }else {
-            MedicalHistory::where('paciente','=',$id_paciente)->update([
-                'alergias'                  => strtolower($request->alergias),
-                'enfermedades'              => strtolower($request->enfermedades),
-                'enfermedades_familiares'   => strtolower($request->enfermedades_familiares),
-                'cirugias'                  => strtolower($request->cirugias),
-                'medicamentos'              => strtolower($request->medicamentos),
-                'otros'                     => strtolower($request->otros),
-                'paciente'                  => $id_paciente,
-            ]);
-            $availability = Appointment::where('id_persona','=',$id_paciente)
-            ->where('id_cita','=',$request->cita)
-            ->update(['estado'=>'#28a745']);
-            $token = Token::create([
-                'paciente' => $id_paciente,
-            ]);
-            $odonto = Odontogram::create([
-                'ficha' => $token->id
-            ]);
-            return response()->json([
-                'message' => 'El registro se ha actualizado satisfactoriamente',
-                'odonto' => $odonto->id], 202);
-        }
-    }
-
     public function verOdonto($id)
     {
         $odontos = Odontogram::where('ficha.paciente',$id)
@@ -215,19 +134,15 @@ class DoctorController extends Controller
         }
     }
 
-    public function nuevaFicha(Request $request)
-    {
-        $ficha = Token::create([
-            'paciente' => $request->id
-        ]);
-        return response()->json([
-            'ficha' => $ficha->id
-        ]);
-    }
 
-    public function obtenerOdonto($id)
+    public function cargarOdonto($id)
     {
-        $odonto = Odontogram::where('ficha',$id)->get();
+        $odonto = Diagnosis::where('odontograma',$id)
+        ->join('sintomas','sintomas.id','diagnostico.sintomas')
+        ->join('dientes','dientes.numero','diagnostico.diente')
+        ->select('dientes.arcada AS arcada','diagnostico.diente AS diente','diagnostico.superficie AS superficie',
+                'sintomas.nombre_sintoma AS nombre_sintoma','sintomas.color AS color')
+        ->get();
         return \response()->json($odonto);
     }
 
@@ -257,6 +172,89 @@ class DoctorController extends Controller
         }
         return response()->json([
             'message' => 'Se ha guardado satisfactoriamente',
+        ]);
+    }
+
+    public function getDiente(Request $request)
+    {
+        $diente = Diagnosis::where('diente',$request->diente)
+        ->where('odontograma',$request->odontograma)
+        ->join('sintomas','sintomas.id','diagnostico.sintomas')
+        ->join('tratamiento','tratamiento.id','diagnostico.tratamiento')
+        ->select('diagnostico.diente AS diente','sintomas.nombre_sintoma AS sintoma',
+                'diagnostico.observacion AS observacion','tratamiento.nombre_tratamiento AS tratamiento')
+        ->get();
+
+        return response()->json($diente);
+    }
+
+    public function asistencia($id)
+    {
+        Appointment::where('id_cita',$id)
+        ->update([
+            'estado' => '#28a745'
+        ]);
+
+        return response()->json([
+            'message' => 'Asistencia confirmada'
+        ]);
+    }
+
+    public function getDiagnosticos($id)
+    {
+        $odontos = Odontogram::where('ficha_dental.paciente',$id)
+        ->join('ficha_dental','ficha_dental.id','odontograma.ficha')
+        ->select('odontograma.id AS id','odontograma.created_at AS fecha_creacion')
+        ->get();
+
+        foreach ($odontos as $odonto => $value) {
+            $diagnostico = Diagnosis::where('odontograma',$value->id)->get();
+            if (count($diagnostico)==0) {
+               unset($odontos[$odonto]);
+            }
+        }
+
+        return response()->json($odontos);
+    }
+
+    public function diagnosticoId($id)
+    {
+        $diagnosticos = Diagnosis::where('odontograma',$id)
+        ->get();
+        return response()->json($diagnosticos);
+    }
+
+    public function nuevoDiagnostico(Request $request)
+    {
+        $ficha = Token::create([
+            'paciente' => $request->id
+        ]);
+        $odonto = Odontogram::create([
+            'ficha' => $ficha->id
+        ]);
+
+        return response()->json($odonto->id);
+    }
+
+    public function editDiagnostico(Request $request)
+    {
+       $diagnosticos = $request->all();
+
+       foreach ($diagnosticos as $diagnostico) {
+           Diagnosis::where('id',$diagnostico['id'])
+           ->where('odontograma',$diagnostico['odontograma'])
+           ->update([
+               'diente' => $diagnostico['diente'],
+               'superficie' => $diagnostico['superficie'],
+               'sintomas' => $diagnostico['sintomas'],
+               'observacion' => $diagnostico['observacion'],
+               'tratamiento' => $diagnostico['tratamiento'],
+               'valor_tratamiento' => $diagnostico['valor_tratamiento'],
+           ]);
+       }
+
+        return response()->json([
+            'message' => 'Se actaulizado el diagnostico correctamente'
         ]);
     }
 }

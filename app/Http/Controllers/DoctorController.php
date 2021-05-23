@@ -219,7 +219,9 @@ class DoctorController extends Controller
 
     public function diagnosticoId($id)
     {
-        
+        $diagnosticos = Diagnosis::where('odontograma',$id)
+        ->get();
+        return response()->json($diagnosticos);
     }
 
     public function nuevoDiagnostico(Request $request)
@@ -232,5 +234,27 @@ class DoctorController extends Controller
         ]);
 
         return response()->json($odonto->id);
+    }
+
+    public function editDiagnostico(Request $request)
+    {
+       $diagnosticos = $request->all();
+
+       foreach ($diagnosticos as $diagnostico) {
+           Diagnosis::where('id',$diagnostico['id'])
+           ->where('odontograma',$diagnostico['odontograma'])
+           ->update([
+               'diente' => $diagnostico['diente'],
+               'superficie' => $diagnostico['superficie'],
+               'sintomas' => $diagnostico['sintomas'],
+               'observacion' => $diagnostico['observacion'],
+               'tratamiento' => $diagnostico['tratamiento'],
+               'valor_tratamiento' => $diagnostico['valor_tratamiento'],
+           ]);
+       }
+
+        return response()->json([
+            'message' => 'Se actaulizado el diagnostico correctamente'
+        ]);
     }
 }

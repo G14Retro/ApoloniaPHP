@@ -54,6 +54,8 @@ Route::group([
         Route::put('asistencia/{id}', 'DoctorController@asistencia');
         Route::get('getDiagnosticos/{id}', 'DoctorController@getDiagnosticos');
         Route::post('nuevoDiagnostico', 'DoctorController@nuevoDiagnostico');
+        Route::get('diagnosticoId/{id}', 'DoctorController@diagnosticoId');
+        Route::post('editDiagnostico', 'DoctorController@editDiagnostico');
 
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');

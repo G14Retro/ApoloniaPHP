@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Availability;
+use App\Appointment;
 use App\MedicalHistory;
 use App\User;
 use App\Surgery;
@@ -36,24 +37,20 @@ class ReceptionistController extends Controller
 
     public function verMedicos()
     {
-        $doctors = User::where('tipo_usuario','=',3)
-        ->select('id','nombre','apellido')
-        ->get();
+        $doctors = User::where('tipo_usuario','=',3) ->select('id','nombre','apellido') ->get();
         return response()->json($doctors);
     }
 
     public function verConsultorios()
     {
-        $consultorios = Surgery::select('id_consultorio','nombre_consultorio')
-        ->get();
+        $consultorios = Surgery::select('id_consultorio','nombre_consultorio')->get();
         return response()->json($consultorios);
     }
 
     public function verConsultas()
     {
         $consultas = Consultation::select('id_consulta',
-        'nombre_consulta')
-        ->get();
+        'nombre_consulta')->get();
         return response()->json($consultas);
     }
 
@@ -61,8 +58,7 @@ class ReceptionistController extends Controller
     public function verDisponibilidades()
     {
         $disponibilidades = StatusAvailability::select('idEstado',
-        'nombreEstado')
-        ->get();
+        'nombreEstado')->get();
         return response()->json($disponibilidades);
     }
 
@@ -70,30 +66,49 @@ class ReceptionistController extends Controller
     public function createDispo(Request $request)
     {
         $crearDispo = Availability::create($request->all());
-        return response()->json([
-            'message' => 'El registro se ha guardado satisfactoriamente'], 201);
+        return response()->json(['message' => 'El registro se ha guardado satisfactoriamente'], 201);
     }
 
     public function dispo(Request $request)
     {
         $dispo = Availability::find($request->all());
-        return response()->json(
-            $dispo);
+        return response()->json($dispo);
     }
 
     public function editDispo(Request $request,$id)
     {
         $dispo = Availability::find($id);
         $dispo->update($request->all());
-        return response()->json(
-            'Registro Actualizado');
+        return response()->json('Registro Actualizado');
     }
 
     public function destroy($id)
     {
         $dispo = Availability::find($id);
         $dispo->delete();
-        return response()->json(
-            'Registro Eliminado');
+        return response()->json('Registro Eliminado');
+    }
+
+    public function cita()
+    {
+        $citas = Appointment::join('estado_cita','estado_cita.id','citas.estado')
+        ->join('disponibilidadHoraria AS dispo', 'dispo.id_disponibilidad', 'citas.disponibilidad')
+        ->join('personas', 'personas.id', 'dispo.id_persona')
+        ->join('tipo_consulta', 'tipo_consulta.id_consulta', 'dispo.tipo_consulta')
+        ->select('citas.id_cita AS id', 'personas.nombre AS nombre', 'personas.apellido AS apellido',
+                'tipo_consulta.nombre_consulta AS consulta', 'dispo.horaInicio AS fechaInicio',
+                'estado_cita.estado_cita AS estado')
+        ->get();
+        return response()->json($citas);
+    }
+
+    public function getDispo(){
+        $dispo = Availability::all();
+        return response()->json($dispo);
+    }
+
+    public function tipoConsulta(){
+        $tipoconsulta = Surgery::select('id_consultorio','nombre_consultorio')->get();
+        return response()->json($tipoconsulta);
     }
 }

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ReceptionistController;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,11 +25,11 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
-    Route::get('listarPacientes','AdministratorController@listarPacientes'); 
+    Route::get('listarPacientes','AdministratorController@listarPacientes');
     Route::post('crearUsuario','AdministratorController@crearUsuario');
-    Route::post('editarUsuario','AdministratorController@editarUsuario');   
-    
-    
+    Route::post('editarUsuario','AdministratorController@editarUsuario');
+
+
     Route::group([
         'middleware' => 'auth:api'
     ], function() {
@@ -64,6 +66,10 @@ Route::group([
         Route::post('dispo','ReceptionistController@dispo');
         Route::put('editDispo/{id}','ReceptionistController@editDispo');
         Route::delete('destroy/{id}','ReceptionistController@destroy');
+        Route::get('cita', 'ReceptionistController@cita');
+        Route::get('getDispo', 'ReceptionistController@getDispo');
+        Route::get('tipoConsulta', 'ReceptionistController@tipoConsulta');
+
 
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');

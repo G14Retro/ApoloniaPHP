@@ -25,18 +25,11 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
-<<<<<<< HEAD
     Route::get('listarPacientes','AdministratorController@listarPacientes');
     Route::post('crearUsuario','AdministratorController@crearUsuario');
     Route::post('editarUsuario','AdministratorController@editarUsuario');
 
 
-=======
-    Route::post('crearUsuario','AdministratorController@crearUsuario');
-    Route::get('listarPacientes','AdministratorController@listarPacientes');
-    Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
-    
->>>>>>> 4e5148a18e4aa688901a3b1b4a8979525bdf92dc
     Route::group([
         'middleware' => 'auth:api'
     ], function() {
@@ -96,8 +89,8 @@ Route::group([
         Route::put('actualizarSintoma/{id}','AdministratorController@actualizarSintoma');
         Route::post('buscarTratamiento','AdministratorController@buscarTratamiento');
         Route::post('buscarSintoma','AdministratorController@buscarSintoma');
-        Route::delete('elimiarTratamiento/{id}','ReceptionistController@elimiarTratamiento');
-        Route::delete('elimiarSintoma/{id}','ReceptionistController@elimiarSintoma');
+        Route::delete('elimiarTratamiento/{id}','AdministratorController@elimiarTratamiento');
+        Route::delete('elimiarSintoma/{id}','AdministratorController@elimiarSintoma');
         
     });
 });

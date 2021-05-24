@@ -74,7 +74,11 @@ Route::group([
         Route::get('cita', 'ReceptionistController@cita');
         Route::get('getDispo', 'ReceptionistController@getDispo');
         Route::get('verPacientes', 'ReceptionistController@verPacientes');
-        Route::get('buscarDocumento', 'ReceptionistController@buscarDocumento');
+        Route::get('buscarPaciente/{id}', 'ReceptionistController@buscarPaciente');
+        Route::get('llamarFechas/{id}', 'ReceptionistController@llamarFechas');
+        Route::post('guardarCita','ReceptionistController@guardarCita');
+        Route::get('buscarCitaId/{id}', 'ReceptionistController@buscarCitaId');
+        Route::get('estadoCitas', 'ReceptionistController@estadoCitas');
 
 
         Route::get('verDocumento', 'AdministratorController@verDocumento');

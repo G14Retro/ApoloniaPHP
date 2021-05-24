@@ -12,9 +12,7 @@ use App\Consultation;
 use App\StatusAvailability;
 use Carbon\Carbon;
 use App\TypeDocument;
-
-
-
+use App\StatusAppointment;
 
 class ReceptionistController extends Controller
 {
@@ -120,9 +118,50 @@ class ReceptionistController extends Controller
         return response()->json($pacientes);
     }
 
-    public function buscarDocumento()
+    public function buscarPaciente($id)
     {
-        $documento = TypeDocument::select('documento')->get();
-        return response()->json($documento);
+        $paciente = User::where('numero_documento',$id)
+        ->select('id','nombre','apellido')
+        ->get();
+        return response()->json($paciente);
+    }
+
+    public function llamarFechas($id)
+    {
+        $fechas = Availability::where('tipo_consulta',$id)
+        ->where('estado',1)
+        ->select('id_disponibilidad AS id','horaInicio')
+        ->get();
+
+        return response()->json($fechas);
+    }
+
+    public function guardarCita(Request $request)
+    {
+        Appointment::create([
+            'estado' => '#007bff',
+            'disponibilidad' => $request->disponibilidad,
+            'id_persona' => $request->id_persona,
+        ]);
+
+        return response()->json([
+            'message' => 'Se ha agendado la cita correctamente'
+        ]);
+    }
+
+    public function buscarCitaId($id)
+    {
+        $cita = Appointment::where('id_cita',$id)
+        ->join('personas','personas.id','citas.id_persona')
+        ->select('citas.estado AS estado','citas.disponibilidad AS disponibilidad','personas.nombre AS nombre',
+                'personas.apellido AS apellido','citas.id_persona')
+        ->get();
+        return response()->json($cita);
+    }
+
+    public function estadoCitas()
+    {
+        $estados = StatusAppointment::select('estado_cita','id')->get();
+        return response()->json($estados);
     }
 }

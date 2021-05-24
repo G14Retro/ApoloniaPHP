@@ -77,9 +77,9 @@ class PatientController extends Controller
     public function agendarCita (Request $request)
     {
         $request->validate([
-            "disponibilidad" => 'required | string', 
+            "disponibilidad" => 'required | string',
             "id_paciente" => 'required | string'
-            
+
         ], [
             'disponibilidad.unique' => 'El error esta en la disponibilidad',
             'id_paciente.required' => 'El error esta en el paciente'
@@ -88,14 +88,14 @@ class PatientController extends Controller
         $cita = new Appointment ([
             'estado' => '#007bff',
             'disponibilidad'=> $request-> disponibilidad,
-            'id_persona' => $request-> id_paciente            
+            'id_persona' => $request-> id_paciente
         ]);
         $cita->save();
         return response () -> json ([
             'Message' => 'Su cita fue agendada correctamente'
         ]);
     }
-    
+
     public function dispoID(Request $request)
     {
        $idDispo = Appointment::find($request->id)->value('disponibilidad');
@@ -116,7 +116,7 @@ class PatientController extends Controller
         $cita = Appointment::findOrfail($id);
         $cita->update([
             'estado' => '#dc3545',
-        ]      
+        ]
         );
         return response()->json([
             'message' => 'Se ha cancelado su cita satisfactoriamente'

@@ -11,6 +11,9 @@ use App\Surgery;
 use App\Consultation;
 use App\StatusAvailability;
 use Carbon\Carbon;
+use App\TypeDocument;
+
+
 
 
 class ReceptionistController extends Controller
@@ -110,5 +113,16 @@ class ReceptionistController extends Controller
     public function tipoConsulta(){
         $tipoconsulta = Surgery::select('id_consultorio','nombre_consultorio')->get();
         return response()->json($tipoconsulta);
+    }
+
+    public function verPacientes(){
+        $pacientes = User::where('tipo_usuario','=',2) -> select('id','numero_documento', 'nombre', 'apellido') ->get();
+        return response()->json($pacientes);
+    }
+
+    public function buscarDocumento()
+    {
+        $documento = TypeDocument::select('documento')->get();
+        return response()->json($documento);
     }
 }

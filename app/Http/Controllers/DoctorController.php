@@ -118,7 +118,7 @@ class DoctorController extends Controller
         ->join('ficha_dental AS ficha','odontograma.ficha','ficha.id')
         ->select('odontograma.id AS id','odontograma.ficha AS ficha','odontograma.created_at AS fecha_creacion')
         ->get();
-        return response()->json($odontos);       
+        return response()->json($odontos);
     }
 
     public function guardarOdonto(Request $request)
@@ -210,7 +210,7 @@ class DoctorController extends Controller
         foreach ($odontos as $odonto => $value) {
             $diagnostico = Diagnosis::where('odontograma',$value->id)->get();
             if (count($diagnostico)==0) {
-               unset($odontos[$odonto]);
+                unset($odontos[$odonto]);
             }
         }
 
@@ -238,20 +238,20 @@ class DoctorController extends Controller
 
     public function editDiagnostico(Request $request)
     {
-       $diagnosticos = $request->all();
+        $diagnosticos = $request->all();
 
-       foreach ($diagnosticos as $diagnostico) {
-           Diagnosis::where('id',$diagnostico['id'])
-           ->where('odontograma',$diagnostico['odontograma'])
-           ->update([
-               'diente' => $diagnostico['diente'],
-               'superficie' => $diagnostico['superficie'],
-               'sintomas' => $diagnostico['sintomas'],
-               'observacion' => $diagnostico['observacion'],
-               'tratamiento' => $diagnostico['tratamiento'],
-               'valor_tratamiento' => $diagnostico['valor_tratamiento'],
-           ]);
-       }
+    foreach ($diagnosticos as $diagnostico) {
+        Diagnosis::where('id',$diagnostico['id'])
+        ->where('odontograma',$diagnostico['odontograma'])
+        ->update([
+            'diente' => $diagnostico['diente'],
+            'superficie' => $diagnostico['superficie'],
+            'sintomas' => $diagnostico['sintomas'],
+            'observacion' => $diagnostico['observacion'],
+            'tratamiento' => $diagnostico['tratamiento'],
+            'valor_tratamiento' => $diagnostico['valor_tratamiento'],
+        ]);
+    }
 
         return response()->json([
             'message' => 'Se actaulizado el diagnostico correctamente'

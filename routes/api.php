@@ -25,18 +25,10 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
-<<<<<<< HEAD
-    Route::get('listarPacientes','AdministratorController@listarPacientes');
-    Route::post('crearUsuario','AdministratorController@crearUsuario');
-    Route::post('editarUsuario','AdministratorController@editarUsuario');
-
-
-=======
     Route::post('crearUsuario','AdministratorController@crearUsuario');
     Route::get('listarPacientes','AdministratorController@listarPacientes');
     Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
-    
->>>>>>> 4e5148a18e4aa688901a3b1b4a8979525bdf92dc
+
     Route::group([
         'middleware' => 'auth:api'
     ], function() {
@@ -47,6 +39,7 @@ Route::group([
         Route::post('actualizarInformacion', 'PatientController@actualizarInformacion');
         Route::post('agendaCita', 'PatientController@agendarCita');
         Route::post('historial', 'PatientController@historial');
+
 
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
         Route::get('verPacientes', 'DoctorController@verPacientes');
@@ -67,6 +60,7 @@ Route::group([
         Route::get('diagnosticoId/{id}', 'DoctorController@diagnosticoId');
         Route::post('editDiagnostico', 'DoctorController@editDiagnostico');
 
+
         Route::get('verDispo', 'ReceptionistController@verDispo');
         Route::get('verMedicos', 'ReceptionistController@verMedicos');
         Route::get('verConsultorios', 'ReceptionistController@verConsultorios');
@@ -78,14 +72,15 @@ Route::group([
         Route::delete('destroy/{id}','ReceptionistController@destroy');
         Route::get('cita', 'ReceptionistController@cita');
         Route::get('getDispo', 'ReceptionistController@getDispo');
-        Route::get('tipoConsulta', 'ReceptionistController@tipoConsulta');
+        Route::get('verPacientes', 'ReceptionistController@verPacientes');
+        Route::get('buscarDocumento', 'ReceptionistController@buscarDocumento');
 
 
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
         Route::post('buscarUsuario','AdministratorController@buscarUsuario');
-        Route::post('editarUsuario','AdministratorController@editarUsuario');  
+        Route::post('editarUsuario','AdministratorController@editarUsuario');
         Route::post('dispoID','PatientController@dispoID');
         Route::put('cancelarCita/{id}','PatientController@cancelarCita');
         Route::get('listarTratamientos','AdministratorController@listarTratamientos');
@@ -98,6 +93,6 @@ Route::group([
         Route::post('buscarSintoma','AdministratorController@buscarSintoma');
         Route::delete('elimiarTratamiento/{id}','ReceptionistController@elimiarTratamiento');
         Route::delete('elimiarSintoma/{id}','ReceptionistController@elimiarSintoma');
-        
+
     });
 });

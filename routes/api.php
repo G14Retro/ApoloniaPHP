@@ -77,7 +77,7 @@ Route::group([
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
-        Route::post('buscarUsuario','AdministratorController@buscarUsuario');
+        Route::get('buscarUsuario/{id}','AdministratorController@buscarUsuario');
         Route::post('editarUsuario','AdministratorController@editarUsuario');  
         Route::post('dispoID','PatientController@dispoID');
         Route::put('cancelarCita/{id}','PatientController@cancelarCita');

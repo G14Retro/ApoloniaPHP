@@ -25,9 +25,10 @@ Route::group([
 ], function () {
     Route::post('login', 'AuthController@login');
     Route::post('signup', 'AuthController@signUp');
-    Route::post('crearUsuario','AdministratorController@crearUsuario');
     Route::get('listarPacientes','AdministratorController@listarPacientes');
-    Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
+    Route::post('crearUsuario','AdministratorController@crearUsuario');
+    Route::post('editarUsuario','AdministratorController@editarUsuario');
+
 
     Route::group([
         'middleware' => 'auth:api'
@@ -79,7 +80,7 @@ Route::group([
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');
         Route::get('verTusuario' , 'AdministratorController@verTusuario');
-        Route::post('buscarUsuario','AdministratorController@buscarUsuario');
+        Route::get('buscarUsuario/{id}','AdministratorController@buscarUsuario');
         Route::post('editarUsuario','AdministratorController@editarUsuario');
         Route::post('dispoID','PatientController@dispoID');
         Route::put('cancelarCita/{id}','PatientController@cancelarCita');
@@ -91,8 +92,8 @@ Route::group([
         Route::put('actualizarSintoma/{id}','AdministratorController@actualizarSintoma');
         Route::post('buscarTratamiento','AdministratorController@buscarTratamiento');
         Route::post('buscarSintoma','AdministratorController@buscarSintoma');
-        Route::delete('elimiarTratamiento/{id}','ReceptionistController@elimiarTratamiento');
-        Route::delete('elimiarSintoma/{id}','ReceptionistController@elimiarSintoma');
+        Route::delete('elimiarTratamiento/{id}','AdministratorController@elimiarTratamiento');
+        Route::delete('elimiarSintoma/{id}','AdministratorController@elimiarSintoma');
 
     });
 });

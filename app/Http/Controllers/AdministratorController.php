@@ -23,7 +23,7 @@ class AdministratorController extends Controller
         $usuarios = User::join('tipo_documento','personas.tipo_documento','tipo_documento.documento')
         ->join('tipo_usuario','personas.tipo_usuario','tipo_usuario.id_tipo')
         ->join('estado','personas.estado','estado.idEstado')
-        ->select('tipo_documento.nombre_documento AS tipo_documento','personas.numero_documento AS numero_documento',
+        ->select('personas.id AS id','tipo_documento.nombre_documento AS tipo_documento','personas.numero_documento AS numero_documento',
         'personas.nombre AS nombre','personas.apellido AS apellido', 'personas.direccion AS direccion', 'personas.ciudad AS ciudad',
         'personas.telefono AS telefono', 'personas.correo AS correo','personas.genero AS genero', 'personas.fecha_nacimiento AS fecha_nacimiento',
         'tipo_usuario.nombre_tipo_usuario AS nombre_tipo_usario', 'estado.nombreEstado AS nombreEstado')
@@ -118,10 +118,10 @@ class AdministratorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function buscarUsuario(Request $request)
+    public function buscarUsuario($id)
     {
         //
-        $usuario = User::find($request);
+        $usuario = User::find($id);
         return response ()->json($usuario);
     }
     public function buscarTratamiento(Request $request)

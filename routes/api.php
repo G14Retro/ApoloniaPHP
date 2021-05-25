@@ -27,7 +27,6 @@ Route::group([
     Route::post('signup', 'AuthController@signUp');
     Route::get('listarPacientes','AdministratorController@listarPacientes');
     Route::post('crearUsuario','AdministratorController@crearUsuario');
-    Route::post('editarUsuario','AdministratorController@editarUsuario');
 
 
     Route::group([
@@ -99,6 +98,6 @@ Route::group([
         Route::post('buscarSintoma','AdministratorController@buscarSintoma');
         Route::delete('elimiarTratamiento/{id}','AdministratorController@elimiarTratamiento');
         Route::delete('elimiarSintoma/{id}','AdministratorController@elimiarSintoma');
-
+        Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
     });
 });

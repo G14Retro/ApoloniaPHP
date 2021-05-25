@@ -14,9 +14,9 @@ class CreateEstadoCitaTable extends Migration
     public function up()
     {
         Schema::create('estado_cita', function (Blueprint $table) {
-            $table->string('id',20);
+            $table->id();
+            $table->string('representacion',20);
             $table->string('estado_cita');
-            $table->primary('id');
         });
     }
 

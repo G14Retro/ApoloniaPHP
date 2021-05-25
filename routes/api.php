@@ -79,7 +79,8 @@ Route::group([
         Route::post('guardarCita','ReceptionistController@guardarCita');
         Route::get('buscarCitaId/{id}', 'ReceptionistController@buscarCitaId');
         Route::get('estadoCitas', 'ReceptionistController@estadoCitas');
-
+        Route::put('editarCita/{id}', 'ReceptionistController@editarCita');
+        
 
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');

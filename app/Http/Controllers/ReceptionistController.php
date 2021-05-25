@@ -138,8 +138,9 @@ class ReceptionistController extends Controller
 
     public function guardarCita(Request $request)
     {
+        $estado = StatusAppointment::where('estado_cita','asignada')->value('id');
         Appointment::create([
-            'estado' => '#007bff',
+            'estado' => $estado,
             'disponibilidad' => $request->disponibilidad,
             'id_persona' => $request->id_persona,
         ]);
@@ -163,5 +164,14 @@ class ReceptionistController extends Controller
     {
         $estados = StatusAppointment::select('estado_cita','id')->get();
         return response()->json($estados);
+    }
+
+    public function editarCita(Request $request,$id)
+    {
+        Appointment::findOrfail($id)->update($request->all());
+
+        return response()->json([
+            'message' => 'Se ha actualizado la cita correctamente'
+        ]);
     }
 }

@@ -16,10 +16,14 @@ class CreateDispoTrigger extends Migration
         DB::unprepared('CREATE TRIGGER cambioDispo AFTER INSERT ON citas
         FOR EACH ROW
         UPDATE disponibilidadhoraria SET estado = 2 WHERE id_disponibilidad = NEW.disponibilidad;');
-        DB::unprepared('CREATE TRIGGER dispoActiva AFTER UPDATE ON citas
+        DB::unprepared("CREATE TRIGGER dispoActiva AFTER UPDATE ON citas
         FOR EACH ROW
+        BEGIN
+        IF NEW.estado = 2 THEN
         UPDATE disponibilidadhoraria SET estado = 1 WHERE id_disponibilidad = NEW.disponibilidad;
-        ');
+        END IF;
+        END
+        ");
     }
 
     /**

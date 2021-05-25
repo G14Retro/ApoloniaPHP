@@ -12,23 +12,15 @@ class AppointmentStatusSeeder extends Seeder
     public function run()
     {
         DB::table('estado_cita')->insert([
-            'id' => '#007bff',
-            'estado_cita' => 'asignada'
+            ['representacion' => '#007bff',
+            'estado_cita' => 'asignada'],
+            ['representacion' => '#dc3545',
+            'estado_cita' => 'cancelada'],
+            ['representacion' => '#17a2b8',
+            'estado_cita' => 'confirmada'],
+            ['representacion' => '#28a745',
+            'estado_cita' => 'asistida']
         ]);
         
-        DB::table('estado_cita')->insert([
-            'id' => '#dc3545',
-            'estado_cita' => 'cancelada'
-        ]);
-
-        DB::table('estado_cita')->insert([
-            'id' => '#17a2b8',
-            'estado_cita' => 'confirmada'
-        ]);
-
-        DB::table('estado_cita')->insert([
-            'id' => '#28a745',
-            'estado_cita' => 'asistida'
-        ]);
     }
 }

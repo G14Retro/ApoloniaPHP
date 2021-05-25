@@ -8,7 +8,7 @@ use App\Availability;
 use App\Appointment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
+use App\StatusAppointment;
 
 class PatientController extends Controller
 {
@@ -84,9 +84,9 @@ class PatientController extends Controller
             'disponibilidad.unique' => 'El error esta en la disponibilidad',
             'id_paciente.required' => 'El error esta en el paciente'
         ]);
-
+        $estado = StatusAppointment::where('estado_cita','asignada')->value('id');
         $cita = new Appointment ([
-            'estado' => '#007bff',
+            'estado' => $estado,
             'disponibilidad'=> $request-> disponibilidad,
             'id_persona' => $request-> id_paciente
         ]);
@@ -114,8 +114,9 @@ class PatientController extends Controller
     public function cancelarCita($id)
     {
         $cita = Appointment::findOrfail($id);
+        $estado = StatusAppointment::where('estado_cita','cancelada')->value('id');
         $cita->update([
-            'estado' => '#dc3545',
+            'estado' => $estado,
         ]
         );
         return response()->json([

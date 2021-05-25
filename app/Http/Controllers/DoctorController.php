@@ -15,7 +15,7 @@ use App\Dent;
 use App\Symptom;
 use App\Treatment;
 use App\Diagnosis;
-
+use App\StatusAppointment;
 
 class DoctorController extends Controller
 {
@@ -25,8 +25,9 @@ class DoctorController extends Controller
             'id_medico'   => 'required|string'
         ]);
         $id_medico = $request->id_medico;
+        $estado = StatusAppointment::where('estado_cita','confirmada')->value('id');
         $appointment = Appointment::where('dispo.id_persona','=',$id_medico)
-        ->where('citas.estado','=','#17a2b8')
+        ->where('citas.estado','=',$estado)
         ->where('dispo.horaInicio','>',Carbon::now())
         ->join('disponibilidadhoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
         ->join('personas','personas.id','citas.id_persona')
@@ -190,9 +191,10 @@ class DoctorController extends Controller
 
     public function asistencia($id)
     {
+        $estado = StatusAppointment::where('estado_cita','asistida')->value('id');
         Appointment::where('id_cita',$id)
         ->update([
-            'estado' => '#28a745'
+            'estado' => $estado
         ]);
 
         return response()->json([

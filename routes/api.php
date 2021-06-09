@@ -59,6 +59,7 @@ Route::group([
         Route::post('nuevoDiagnostico', 'DoctorController@nuevoDiagnostico');
         Route::get('diagnosticoId/{id}', 'DoctorController@diagnosticoId');
         Route::post('editDiagnostico', 'DoctorController@editDiagnostico');
+        Route::get('getPacienteByOdonto/{id}', 'DoctorController@getPacienteByOdonto');
 
 
         Route::get('verDispo', 'ReceptionistController@verDispo');

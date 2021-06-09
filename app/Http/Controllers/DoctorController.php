@@ -226,6 +226,18 @@ class DoctorController extends Controller
         return response()->json($diagnosticos);
     }
 
+
+    public function getPacienteByOdonto($id)
+    {
+        $paciente = Odontogram::where('odontograma.id',$id)
+        ->join('ficha_dental','odontograma.ficha','ficha_dental.id')
+        ->join('personas','ficha_dental.paciente','personas.id')
+        ->select('personas.nombre AS nombre','personas.apellido AS apellido')
+        ->get();
+
+        return response()->json($paciente);
+    }
+
     public function nuevoDiagnostico(Request $request)
     {
         $ficha = Token::create([

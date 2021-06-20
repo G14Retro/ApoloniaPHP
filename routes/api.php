@@ -39,6 +39,7 @@ Route::group([
         Route::post('actualizarInformacion', 'PatientController@actualizarInformacion');
         Route::post('agendaCita', 'PatientController@agendarCita');
         Route::post('historial', 'PatientController@historial');
+        Route::get('pacienteDash/{id}', 'PatientController@pacienteDash');
 
 
         Route::post('pacienteMedico', 'DoctorController@pacienteMedico');
@@ -60,6 +61,7 @@ Route::group([
         Route::get('diagnosticoId/{id}', 'DoctorController@diagnosticoId');
         Route::post('editDiagnostico', 'DoctorController@editDiagnostico');
         Route::get('getPacienteByOdonto/{id}', 'DoctorController@getPacienteByOdonto');
+        Route::get('doctorDash/{id}', 'DoctorController@doctorDash');
 
 
         Route::get('verDispo', 'ReceptionistController@verDispo');
@@ -80,7 +82,7 @@ Route::group([
         Route::get('buscarCitaId/{id}', 'ReceptionistController@buscarCitaId');
         Route::get('estadoCitas', 'ReceptionistController@estadoCitas');
         Route::put('editarCita/{id}', 'ReceptionistController@editarCita');
-        
+        Route::get('recepDash','ReceptionistController@recepDash');
 
         Route::get('verDocumento', 'AdministratorController@verDocumento');
         Route::get('verEstado' , 'AdministratorController@verEstado');
@@ -100,5 +102,6 @@ Route::group([
         Route::delete('elimiarTratamiento/{id}','AdministratorController@elimiarTratamiento');
         Route::delete('elimiarSintoma/{id}','AdministratorController@elimiarSintoma');
         Route::put('actualizarUsuario/{id}','AdministratorController@actualizarUsuario');
+        Route::get('adminDash','AdministratorController@adminDash');
     });
 });

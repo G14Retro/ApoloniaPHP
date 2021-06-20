@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Appointment;
+use App\Availability;
 use Illuminate\Http\Request;
 use App\User;
 use App\UserType;
@@ -9,6 +11,7 @@ use App\TypeDocument;
 use App\Status;
 use App\Treatment;
 use App\Symptom;
+use Illuminate\Support\Facades\DB;
 
 class AdministratorController extends Controller
 {
@@ -243,5 +246,29 @@ class AdministratorController extends Controller
         $tusuario = UserType::select('nombre_tipo_usuario','id_tipo')
         ->get();
         return response()->json($tusuario);
+    }
+
+    //Obtener datos para el dashboard
+    public function adminDash()
+    {
+        $tipo_asignada = DB::table('estado_cita')->where('estado_cita','asignada')->value('id');
+        $tipo_asistida = DB::table('estado_cita')->where('estado_cita','asistida')->value('id');
+        $tipo_cancelada = DB::table('estado_cita')->where('estado_cita','cancelada')->value('id');
+        $estado_disponible = DB::table('estadodispo')->where('nombreEstado','disponible')->value('idEstado');
+        $asignadas = Appointment::where('estado',$tipo_asignada)->get();
+        $asistidas = Appointment::where('estado',$tipo_asistida)->get();
+        $canceladas = Appointment::where('estado',$tipo_cancelada)->get();
+        $disponibilidades = Availability::where('estado',$estado_disponible)->get();
+        $activos = User::where('estado','a')->get();
+        $inactivos = User::where('estado','i')->get();
+
+        return response()->json([
+            'asignadas' => count($asignadas),
+            'asistidas' => count($asistidas),
+            'canceladas' => count($canceladas),
+            'disponibilidades' => count($disponibilidades),
+            'activos' => count($activos),
+            'inactivos' => count($inactivos),
+        ]);
     }
 }

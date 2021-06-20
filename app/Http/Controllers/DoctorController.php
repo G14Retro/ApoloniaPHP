@@ -271,4 +271,20 @@ class DoctorController extends Controller
             'message' => 'Se actaulizado el diagnostico correctamente'
         ]);
     }
+
+    public function doctorDash($id)
+    {
+        $appointment = Appointment::join('disponibilidadhoraria AS dispo','dispo.id_disponibilidad','citas.disponibilidad')
+        ->join('estado_cita','estado_cita.id','citas.estado')
+        ->where(
+            [
+                'dispo.id_persona' => $id,
+                'estado_cita.estado_cita' => 'confirmada'
+            ]
+        )
+        ->get();
+        return response()->json([
+            'asignadas' => count($appointment)
+        ]);
+    }
 }

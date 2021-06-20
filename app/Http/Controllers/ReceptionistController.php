@@ -13,6 +13,7 @@ use App\StatusAvailability;
 use Carbon\Carbon;
 use App\TypeDocument;
 use App\StatusAppointment;
+use Illuminate\Support\Facades\DB;
 
 class ReceptionistController extends Controller
 {
@@ -172,6 +173,25 @@ class ReceptionistController extends Controller
 
         return response()->json([
             'message' => 'Se ha actualizado la cita correctamente'
+        ]);
+    }
+
+    public function recepDash()
+    {
+        $tipo_asignada = DB::table('estado_cita')->where('estado_cita','asignada')->value('id');
+        $tipo_asistida = DB::table('estado_cita')->where('estado_cita','asistida')->value('id');
+        $tipo_cancelada = DB::table('estado_cita')->where('estado_cita','cancelada')->value('id');
+        $estado_disponible = DB::table('estadodispo')->where('nombreEstado','disponible')->value('idEstado');
+        $asignadas = Appointment::where('estado',$tipo_asignada)->get();
+        $asistidas = Appointment::where('estado',$tipo_asistida)->get();
+        $canceladas = Appointment::where('estado',$tipo_cancelada)->get();
+        $disponibilidades = Availability::where('estado',$estado_disponible)->get();
+
+        return response()->json([
+            'asignadas' => count($asignadas),
+            'asistidas' => count($asistidas),
+            'canceladas' => count($canceladas),
+            'disponibilidades' => count($disponibilidades),
         ]);
     }
 }

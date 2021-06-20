@@ -9,6 +9,7 @@ use App\Appointment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\StatusAppointment;
+use Illuminate\Support\Facades\DB;
 
 class PatientController extends Controller
 {
@@ -121,6 +122,32 @@ class PatientController extends Controller
         );
         return response()->json([
             'message' => 'Se ha cancelado su cita satisfactoriamente'
+        ]);
+    }
+
+    public function pacienteDash($id)
+    {
+        $tipo_asignada = DB::table('estado_cita')->where('estado_cita','asignada')->value('id');
+        $tipo_asistida = DB::table('estado_cita')->where('estado_cita','asistida')->value('id');
+        $tipo_cancelada = DB::table('estado_cita')->where('estado_cita','cancelada')->value('id');
+        $estado_disponible = DB::table('estadodispo')->where('nombreEstado','disponible')->value('idEstado');
+        $asignadas = Appointment::where([
+            'estado' => $tipo_asignada,
+            'id_persona' => $id
+        ])->get();
+        $asistidas = Appointment::where([
+            'estado' => $tipo_asistida,
+            'id_persona' => $id
+        ])->get();
+        $canceladas = Appointment::where([
+            'estado' => $tipo_cancelada,
+            'id_persona' => $id
+        ])->get();
+
+        return response()->json([
+            'asignadas' => count($asignadas),
+            'asistidas' => count($asistidas),
+            'canceladas' => count($canceladas),
         ]);
     }
 }

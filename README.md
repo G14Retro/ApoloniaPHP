@@ -56,6 +56,24 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
+Pasos para configurar back-end
+1. Instalar laragon o XAMP
+2. Descargar PHP 7.2.5
+3. Copiar el contenido de PHP 7.2.5 en la ruta C:\laragon\bin\php
+4. Descargar Composer e instalar selecionando php.exe que se encuentra en la ruta C:\laragon\bin\php\directorio php descargado
+5. Abrir laragon dar click en menu en la opción PHP y se selecciona la versión 7.2.5
+6. Dar click en iniciar todo desde laragon
+7. abrir el proyecto en un editor de código
+8. Copiar el archivo .env.example y pegar uno nuevo con el siguiente nombre .env
+9. Abrir el motor de MySql que prefiera y crear una base de datos con el nombre que aparece en el .env
+10. Abrir una terminal en la ruta del proyecto
+11. Ejecutar el comando "composer update"
+11. Ejecutar el comando "composer install"
+11. Ejecutar el comando "php artisan key:generate"
+11. Ejecutar el comando "php artisan migrate:refresh --seed"
+11. Ejecutar el comando "php artisan passport:install"
+12. Por ultimo ejecutar "php artisan serve" para iniciar los servicios
+
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).

@@ -56,7 +56,7 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-Pasos para configurar back-end
+## Pasos para configurar back-end
 1. Instalar laragon o XAMP
 2. Descargar PHP 7.2.5
 3. Copiar el contenido de PHP 7.2.5 en la ruta C:\laragon\bin\php
